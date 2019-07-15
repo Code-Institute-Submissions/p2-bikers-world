@@ -6,17 +6,12 @@ var map;
 // CityBikes API 
 var endpoint = "https://api.citybik.es/v2/networks";
 
-
-function initMap() {
-    
-}
-
-// data source
-function getDataFromEndpointAsync(callback) {
+// Data source of CityBike API
+function getDataFromCityBikeAsync(callback) {
     axios.get(endpoint)
         .then(function(response) {
-            let feedback = response.data.networks[0].location;
-            console.log(feedback);
+            let fbCityBike = response.data.networks[0].location;
+            console.log(fbCityBike);
             
             // let results = response.data.features[0].geometry.coordinates;
             // // trigger the callback
@@ -25,8 +20,31 @@ function getDataFromEndpointAsync(callback) {
         });
 }
 
+// Data source of BikeWise API
+function getDataFromBikeWiseAsync(callback) {
+    axios.get(endpoint)
+        .then(function(response){
+            // let fbBikeWise = response.data.networks[0].location;
+            console.log(response);
+        });
+}
+
 // Retrieve data from CityBike API
-getDataFromEndpointAsync();
+getDataFromCityBikeAsync();
+// Retrieve data from BikeWise API
+getDataFromBikeWiseAsync();
+
+
+// Initialize API call results on Google Map
+function initMap() {
+    
+    // Render Singapore coordinates on Google Map
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: 1.35, lng: 103.81 },
+        zoom: 11
+    });
+}
+
 
 /*
 $(function() {
