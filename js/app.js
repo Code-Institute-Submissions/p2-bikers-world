@@ -5,7 +5,6 @@ var map;
 // --- Store API link
 // CityBikes API 
 var endpoint = "https://api.citybik.es/v2/networks";
-// var endpoint = "http://api.citybik.es/v2/networks";
 
 
 function initMap() {
