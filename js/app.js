@@ -4,13 +4,15 @@
 var map;
 // --- Store API link
 // CityBikes API 
-var endpoint = "https://api.citybik.es/v2/networks";
+var epCityBike = "https://api.citybik.es/v2/networks";
+var epBikeWise = "https://bikewise.org:443/api/v2/incidents";
+
 
 // Data source of CityBike API
 function getDataFromCityBikeAsync(callback) {
-    axios.get(endpoint)
+    axios.get(epCityBike)
         .then(function(response) {
-            let fbCityBike = response.data.networks[0].location;
+            let fbCityBike = response.data.networks;
             console.log(fbCityBike);
             
             // let results = response.data.features[0].geometry.coordinates;
@@ -22,15 +24,19 @@ function getDataFromCityBikeAsync(callback) {
 
 // Data source of BikeWise API
 function getDataFromBikeWiseAsync(callback) {
-    axios.get(endpoint)
+    axios.get(epBikeWise)
         .then(function(response){
-            // let fbBikeWise = response.data.networks[0].location;
-            console.log(response);
+            let fbBikeWise = response.data.incidents;
+            console.log(fbBikeWise);
         });
 }
 
+
+// === Calling data retrieval function ===
+
 // Retrieve data from CityBike API
 getDataFromCityBikeAsync();
+
 // Retrieve data from BikeWise API
 getDataFromBikeWiseAsync();
 
@@ -46,12 +52,12 @@ function initMap() {
 }
 
 
-/*
+// Load the locations of the data
 $(function() {
     $("#get-taxi-button").click(function() {
         // async - how do we wait for the data to finish
         // loading before executing the next task?
-        getDataFromEndpointAsync(function(data) {
+        getDataFromBikeWiseAsync(function(data) {
             
             // for each taxi inside the data
             for (let taxi of data) {
@@ -69,6 +75,8 @@ $(function() {
     })
 });
 
+
+/*
 function initMap() {
     
     map = new google.maps.Map(document.getElementById('map'), {
