@@ -13,7 +13,8 @@ function getDataFromCityBikeAsync(callback) {
     axios.get(epCityBike)
         .then(function(response) {
             let fbCityBike = response.data.networks;
-            console.log(fbCityBike);
+            // console.log(fbCityBike);
+            callback(fbCityBike);
             
             // let results = response.data.features[0].geometry.coordinates;
             // // trigger the callback
@@ -26,8 +27,9 @@ function getDataFromCityBikeAsync(callback) {
 function getDataFromBikeWiseAsync(callback) {
     axios.get(epBikeWise)
         .then(function(response){
-            let fbBikeWise = response.data.incidents;
-            console.log(fbBikeWise);
+            // let fbBikeWise = response.data.incidents;
+            // callback(fbBikeWise);
+            // console.log(fbBikeWise);
         });
 }
 
@@ -35,10 +37,10 @@ function getDataFromBikeWiseAsync(callback) {
 // === Calling data retrieval function ===
 
 // Retrieve data from CityBike API
-getDataFromCityBikeAsync();
+// getDataFromCityBikeAsync();
 
 // Retrieve data from BikeWise API
-getDataFromBikeWiseAsync();
+// getDataFromBikeWiseAsync();
 
 
 // Initialize API call results on Google Map
@@ -54,47 +56,29 @@ function initMap() {
 
 // Load the locations of the data
 $(function() {
-    $("#get-taxi-button").click(function() {
-        // async - how do we wait for the data to finish
-        // loading before executing the next task?
-        getDataFromBikeWiseAsync(function(data) {
+    $("#get-bike-button").click(function() {
+        getDataFromCityBikeAsync(function(data) {
             
-            // for each taxi inside the data
-            for (let taxi of data) {
-                let taxiPos = {
-                    lat: taxi[1],
-                    lng: taxi[0]
+            // for each bike inside the data
+            for (let bike of data) {
+                
+                // Store each bike's latitude and longitute in bikePostion object
+                let bikePosition = {
+                    lat: bike.location.latitude,
+                    lng: bike.location.longitude
                 };
-
+                
+                
+                console.log(bikePosition);
+                
+                // Drop maker for each bike's location
                 new google.maps.Marker({
-                    position: taxiPos,
+                    position: bikePosition,
                     map: map
                 })
+                
             }
+            
         });
     })
 });
-
-
-/*
-function initMap() {
-    
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: 1.35, lng: 103.81 },
-        zoom: 12
-    });
-}
-
-
-// data source
-function getDataFromEndpointAsync(callback) {
-    axios.get(endpoint)
-        .then(function(response) {
-            let results = response.data.features[0].geometry.coordinates;
-            // trigger the callback
-            callback(results);
-            console.log(response)
-        });
-}
-
-*/
