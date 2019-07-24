@@ -1,192 +1,68 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Biker's World - The search engine to get you to nearest bicycle.</title>
-  <link rel="icon" href="img/Fevicon.png" type="image/png">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <link rel="stylesheet" href="vendors/bootstrap/bootstrap.min.css">
-  <link rel="stylesheet" href="vendors/themify-icons/themify-icons.css">
-  <link rel="stylesheet" href="vendors/owl-carousel/owl.theme.default.min.css">
-  <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-  <link rel="stylesheet" href="css/style.css">
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+    <title>Biker's World</title>
 </head>
 
 <body>
+    <h1>Biker's World</h1>
 
-  <!--================ Header Menu Area start =================-->
-  <header class="header_area">
-    <div class="main_menu">
-      <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container box_1620">
-          <a class="navbar-brand logo_h" href="index.html"><img src="img/logo.png" alt=""></a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-
-          <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
-            <ul class="nav navbar-nav menu_nav justify-content-end">
-              <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
-              <li class="nav-item"><a class="nav-link" href="feature.html">Features</a></li>
-              <li class="nav-item"><a class="nav-link" href="service.html">Service</a>
-                <li class="nav-item"><a class="nav-link" href="pricing.html">Pricing</a>
-                  <li class="nav-item submenu dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pages</a>
-                    <ul class="dropdown-menu">
-                      <li class="nav-item"><a class="nav-link" href="blog.html">Single Blog</a>
-                        <li class="nav-item"><a class="nav-link" href="blog-details.html">Blog Details</a>
-                    </ul>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-            </ul>
-
-            <div class="nav-right text-center text-lg-right py-4 py-lg-0">
-              <a class="button button-link mr-4" href="#"><span class="align-middle"><i class="ti-comments"></i></span> Live Chat</a>
-              <a class="button button-outline button-small" href="#">Login</a>
-            </div>
-          </div>
-        </div>
-      </nav>
-    </div>
-  </header>
-  <!--================Header Menu Area =================-->
-
-
-  <!--================ Banner Section start =================-->
-  <section class="hero-banner text-center">
-    <div class="container">
-      <p class="text-uppercase">Biker's World</p>
-      <h1>Welcome. Enthusiast.</h1>
-      <p class="hero-subtitle">Your one stop channel for latest bicycle incidents update and bike sharing service.</p>
-      <!-- <a class="button button-outline" href="#">Get Started</a> -->
-    </div>
-  </section>
-  <!--================ Banner Section end =================-->
-
-
-  <!--================ Feature section start =================-->
-  <section class="section-margin">
+    <!-- Body -->
     <div class="container-fluid">
-      <div class="row">
-        <div class="col">
-          <!-- Google Map's display -->
-          <div id="map" style='height:600px'></div>
+        <div class="row">
+            <div class="col">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Default</span>
+                    </div>
+                    <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                </div>
+                <!-- Google Map's display -->
+                <div id="map" style='height:600px'></div>
+            </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="pt-2 pb-2 col">
-          <!-- Search function -->
-          <button id="get-bike-button" class="btn btn-primary">Locate Bike!</button>
+        <div class="row">
+            <div class="pt-2 pb-2 col text-center">
+                <!-- Search function -->
+                <button id="get-bike-button" class="btn btn-primary">Locate Bike!</button>
+            </div>
         </div>
-      </div>
     </div>
-  </section>
-  <!--================ Feature section end =================-->
 
-
-  <!--================ Testimonial section start =================-->
-  <section class="bg-gray section-padding"></section>
-  <!--================ Testimonial section end =================-->
-
-
-  <!-- ================ start footer Area ================= -->
-  <footer class="footer-area section-gap">
-    <div class="container">
-      <div class="row">
-        <div class="col-xl-3 col-sm-6 mb-4 mb-xl-0 single-footer-widget">
-          <h4>About Us</h4>
-          <p>Heaven fruitful doesn't over lesser days appear creeping seasons so behold bearing days open</p>
-          <a class="navbar-brand logo_h d-none d-xl-block" href="index.html"><img src="img/logo.png" alt=""></a>
+    <!-- Footer -->
+    <footer class="page-footer font-small text-white bg-dark">
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">
+            Copyright &copy;
+            <script>
+                document.write(new Date().getFullYear());
+            </script>
+            Tommy Lee
         </div>
-        <div class="col-xl-3 col-sm-6 mb-4 mb-xl-0 single-footer-widget">
-          <h4>Contact Info</h4>
-          <ul>
-            <li>Address: Your address goes here, your demo address.</li>
-            <li><a href="tel:+88044338899">Phone: +880 44338899</a></li>
-            <li><a href="mailto:info@colorlib.com">Email: info@colorlib.com</a></li>
-          </ul>
-        </div>
-        <!--<div class="col-xl-2 col-sm-6 mb-4 mb-xl-0 single-footer-widget">-->
-        <!--  <h4>Important Link</h4>-->
-        <!--  <ul>-->
-        <!--    <li><a href="#">WHMCS-bridge</a></li>-->
-        <!--    <li><a href="#">Search Domain</a></li>-->
-        <!--    <li><a href="#">My Account</a></li>-->
-        <!--    <li><a href="#">Shopping Cart</a></li>-->
-        <!--    <li><a href="#">Our Shop</a></li>-->
-        <!--  </ul>-->
-        <!--</div>-->
-        <!--<div class="offset-xl-1 col-xl-3 col-sm-6 mb-4 mb-xl-0 single-footer-widget">-->
-        <!--  <h4>Newsletter</h4>-->
-        <!--  <p>Heaven fruitful doesn't over lesser in days. Appear creeping seasons deve behold bearing days open</p>-->
+    </footer>
 
-        <!--  <div class="form-wrap" id="mc_embed_signup">-->
-        <!--    <form target="_blank" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01" method="get">-->
-        <!--      <div class="input-group">-->
-        <!--        <input type="email" class="form-control" name="EMAIL" placeholder="Your Email Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your Email Address '">-->
-        <!--        <div class="input-group-append">-->
-        <!--          <button class="btn click-btn" type="submit">-->
-        <!--            <i class="ti-arrow-right"></i>-->
-        <!--          </button>-->
-        <!--        </div>-->
-        <!--      </div>-->
-        <!--      <div style="position: absolute; left: -5000px;">-->
-        <!--        <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text">-->
-        <!--      </div>-->
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-        <!--      <div class="info"></div>-->
-        <!--    </form>-->
-        <!--  </div>-->
+    <!-- Own JavaScript implementation for project #2 -->
+    <script src="js/app.js"></script>
 
-        <!--</div>-->
-      </div>
-      <div class="footer-bottom row align-items-center text-center text-lg-left">
-        <p class="footer-text m-0 col-lg-8 col-md-12">
-          <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-          Copyright &copy;
-          <script>
-            document.write(new Date().getFullYear());
-          </script>
-          All rights reserved | This template is made with <i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-          <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-        </p>
-        <div class="col-lg-4 col-md-12 text-center text-lg-right footer-social">
-          <a href="#"><i class="ti-facebook"></i></a>
-          <a href="#"><i class="ti-twitter-alt"></i></a>
-          <a href="#"><i class="ti-dribbble"></i></a>
-          <a href="#"><i class="ti-linkedin"></i></a>
-        </div>
-      </div>
-    </div>
-  </footer>
-  <!-- ================ End footer Area ================= -->
+    <!-- Axios API to help assist in data retrieval -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-
-
-  <!-- Implemented along with the template -->
-  <script src="vendors/jquery/jquery-3.2.1.min.js"></script>
-  <script src="vendors/bootstrap/bootstrap.bundle.min.js"></script>
-  <script src="vendors/owl-carousel/owl.carousel.min.js"></script>
-  <script src="js/jquery.ajaxchimp.min.js"></script>
-  <script src="js/mail-script.js"></script>
-  <script src="js/main.js"></script>
-  <script src="js/app.js"></script>
-
-
-  <!-- Axios API to help assist in data retrieval -->
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
-  <!-- Google Maps API for TGC project -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDk7VVZE0HN64Io6HSp5h7Vo4Orh4wqpqY&callback=initMap&libraries=places" async defer></script>
-
+    <!-- Google Maps API for TGC project -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDk7VVZE0HN64Io6HSp5h7Vo4Orh4wqpqY&callback=initMap&libraries=places" async defer></script>
 
 </body>
 
