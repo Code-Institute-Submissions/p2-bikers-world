@@ -1,7 +1,18 @@
 // Variables declarations
 // ----------------------------------------------------------------
-// --- Store map instance
+// --> Store map instance
 var map;
+// --> BikeWise API parameters
+var bikewise_params = {
+    'page': 1,
+    'per_page': 1,
+    'occurred_before': '',
+    'occurred_after': '',
+    'incident_type': '',
+    'proximity': '',
+    'proximity_square': 100,
+    'query': ''
+};
 
 // --- Store API link
 var epCityBike = "https://api.citybik.es/v2/networks";          // CityBikes API
@@ -22,7 +33,7 @@ function getDataFromCityBikeAsync(callback) {
 // Data source of BikeWise API
 function getDataFromBikeWiseAsync(callback) {
     axios.get(epBikeWise)
-        .then(function(response){
+        .then(function(response) {
             
             // let fbBikeWise = response.data.incidents;
             // callback(fbBikeWise);
@@ -35,10 +46,8 @@ function getDataFromBikeWiseAsync(callback) {
 
 // === Calling data retrieval function ===
 
-// Retrieve data from CityBike API
-// getDataFromCityBikeAsync();
 // Retrieve data from BikeWise API
-// getDataFromBikeWiseAsync();
+getDataFromBikeWiseAsync(,bikewise_params);
 
 
 // Initialize API call results on Google Map
@@ -54,6 +63,7 @@ function initMap() {
 
 // Load the locations of the data
 $(function() {
+    
     $("#get-bike-button").click(function() {
         
         getDataFromCityBikeAsync(function(data) {
