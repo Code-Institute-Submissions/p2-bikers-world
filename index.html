@@ -13,17 +13,18 @@
 </head>
 
 <body>
-    <h1>Biker's</h1>
+    <h1>Biker's World</h1>
 
     <!-- Body -->
     <div class="container-fluid">
         <div class="row">
             <div class="col">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroup-sizing-default">Default</span>
+                <!-- Search box for user's to input the desired locations of the bicycle -->
+                <div class="input-group mb-3 col-xl-10 offset-xl-1">
+                    <input type="text" class="form-control" placeholder="Bike location" aria-label="bike location" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-primary" type="button">Search</button>
                     </div>
-                    <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
                 </div>
                 <!-- Google Map's display -->
                 <div id="map" style='height:600px'></div>
@@ -35,27 +36,30 @@
                 <button id="get-bike-button" class="btn btn-primary">Locate Bike!</button>
             </div>
         </div>
-        
+
         <!-- Using bootstrap card to show forum posts from BikeWise -->
-        <div class="row">
-            <div class="card text-white bg-primary mb-3 w-75">
+        <div class="row mt-1">
+            <div class="card text-white bg-primary mb-3 w-50">
                 <div class="card-header">Header</div>
                 <div class="card-body">
+                    <div class="card-title">Hello</div>
                 </div>
             </div>
-            <div class="card text-white bg-seconday mb-3 w-75">
+            <div class="card text-white bg-secondary mb-3 w-50">
                 <div class="card-header">Header</div>
                 <div class="card-body">
+                    <div class="card-title">Hello</div>
                 </div>
             </div>
-            <div class="card text-white bg-success mb-3 w-75">
+            <div class="card text-white bg-success mb-3 w-50">
                 <div class="card-header">Header</div>
                 <div class="card-body">
+                    <div class="card-title">Hello</div>
                 </div>
             </div>
         </div>
-    
-    <!-- end of container-fluid | the main-content of the page -->
+
+        <!-- end of container-fluid | the main-content of the page -->
     </div>
 
     <!-- Footer -->
