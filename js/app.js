@@ -38,7 +38,6 @@ function getDataFromBikeWiseAsync(callback) {
 
 // Retrieve data from CityBike API
 // getDataFromCityBikeAsync();
-
 // Retrieve data from BikeWise API
 // getDataFromBikeWiseAsync();
 
@@ -57,6 +56,7 @@ function initMap() {
 // Load the locations of the data
 $(function() {
     $("#get-bike-button").click(function() {
+        
         getDataFromCityBikeAsync(function(data) {
             
             // for each bike inside the data
@@ -67,7 +67,6 @@ $(function() {
                     lat: bike.location.latitude,
                     lng: bike.location.longitude
                 };
-                
                 
                 console.log(bikePosition);
                 
@@ -80,5 +79,6 @@ $(function() {
             }
             
         });
+        
     })
 });
