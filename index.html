@@ -16,14 +16,14 @@
 </head>
 
 <body>
-    
+
     <!-- Navigation Bar -->
     <h1>Biker's World</h1>
 
     <!-- Search for bike locations -->
     <div class="container-fluid">
+        <h3>Bike locations</h3>
         <div class="row">
-            <h3>Bike locations</h3>
             <div class="col">
                 <!-- Search box for user's to input the desired locations of the bicycle -->
                 <div class="input-group mb-3 col-xl-10 offset-xl-1">
@@ -46,7 +46,13 @@
         <!-- Search for bike incidents -->
         <!-- Using bootstrap card to show forum posts from BikeWise -->
         <h3>Incidents</h3>
-        <div class="row mt-1">
+        <div class="input-group mb-3 col-xl-10 offset-xl-1">
+            <input type="text" class="form-control" placeholder="" aria-label="search bike incidents" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <button class="btn btn-outline-primary" type="button">Search</button>
+            </div>
+        </div>
+        <div class="row mt-1 col-xl-10 offset-xl-1">
             <div class="card text-white bg-primary mb-3 w-50">
                 <div class="card-header">Header</div>
                 <div class="card-body">
@@ -90,8 +96,6 @@
 
     <!-- Own JavaScript implementation for project #2 -->
     <script src="js/app.js"></script>
-
-    
 
     <!-- Google Maps API for TGC project -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDk7VVZE0HN64Io6HSp5h7Vo4Orh4wqpqY&callback=initMap&libraries=places" async defer></script>

@@ -2,37 +2,46 @@
 // ----------------------------------------------------------------
 // --> Store map instance
 var map;
+
 // --> BikeWise API parameters
+
 var bikewise_params = {
     'page': 1,
-    'per_page': 1,
-    'occurred_before': '',
-    'occurred_after': '',
-    'incident_type': '',
-    'proximity': '',
+    // 'per_page': 50,
+    // 'incident_type': '',
+    // 'proximity': '',
     'proximity_square': 100,
+    'query': ''
+};
+var bikewise_params_2 = {
+    'page': 5,
+    'per_page': 50,
+    // 'incident_type': '',
+    // 'proximity': '',
+    'proximity_square': 1000,
     'query': ''
 };
 
 // --- Store API link
-var epCityBike = "https://api.citybik.es/v2/networks";          // CityBikes API
-var epBikeWise = "https://bikewise.org:443/api/v2/incidents";   // BikeWise API
-
+// -----> CityBikes API
+var epCityBike = "https://api.citybik.es/v2/networks";       
+// -----> BikeWise API
+var epBikeWise = "https://bikewise.org:443/api/v2/incidents";
+var epBW = "https://bikewise.org:443/api/v2/incidents?page=5&per_page=50&proximity_square=100"
 
 // Data source of CityBike API
 function getDataFromCityBikeAsync(callback) {
     axios.get(epCityBike)
         .then(function(response) {
-            let fbCityBike = response.data.networks;
+            // let fbCityBike = response.data.networks;
             // console.log(fbCityBike);
-            callback(fbCityBike);
-            
+            // callback(fbCityBike);
         });
 }
 
 // Data source of BikeWise API
-function getDataFromBikeWiseAsync(callback) {
-    axios.get(epBikeWise)
+function getDataFromBikeWiseAsync(params, callback) {
+    axios.get(epBikeWise, {params})
         .then(function(response) {
             
             // let fbBikeWise = response.data.incidents;
@@ -47,8 +56,8 @@ function getDataFromBikeWiseAsync(callback) {
 // === Calling data retrieval function ===
 
 // Retrieve data from BikeWise API
-getDataFromBikeWiseAsync(,bikewise_params);
-
+getDataFromBikeWiseAsync(bikewise_params);
+getDataFromBikeWiseAsync(bikewise_params_2);
 
 // Initialize API call results on Google Map
 function initMap() {
@@ -65,9 +74,8 @@ function initMap() {
 $(function() {
     
     $("#get-bike-button").click(function() {
-        
         getDataFromCityBikeAsync(function(data) {
-            
+
             // for each bike inside the data
             for (let bike of data) {
                 
