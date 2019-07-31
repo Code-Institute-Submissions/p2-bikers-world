@@ -1,4 +1,4 @@
-# Project #2 - Biker's World
+# P2 - Biker's World
 
 A bike-sharing locator that helps to discover where are the bicycles located within the city.
 They can be located via these search fields stated below so that search results can be precised to what they need.
