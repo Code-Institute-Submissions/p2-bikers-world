@@ -1,10 +1,9 @@
 // Variables declarations
 // ----------------------------------------------------------------
 // --> Store map instance
-var map;
+var map, infoWindow;
 
 // --> BikeWise API parameters
-
 var bikewise_params = {
     'page': 1,
     // 'per_page': 50,
@@ -24,31 +23,30 @@ var bikewise_params_2 = {
 
 // --- Store API link
 // -----> CityBikes API
-var epCityBike = "https://api.citybik.es/v2/networks";       
+var epCityBike = "https://api.citybik.es/v2/networks";
 // -----> BikeWise API
 var epBikeWise = "https://bikewise.org:443/api/v2/incidents";
-var epBW = "https://bikewise.org:443/api/v2/incidents?page=5&per_page=50&proximity_square=100"
 
 // Data source of CityBike API
 function getDataFromCityBikeAsync(callback) {
     axios.get(epCityBike)
         .then(function(response) {
-            // let fbCityBike = response.data.networks;
-            // console.log(fbCityBike);
-            // callback(fbCityBike);
+            let fbCityBike = response.data.networks;
+            console.log(fbCityBike);
+            callback(fbCityBike);
         });
 }
 
 // Data source of BikeWise API
 function getDataFromBikeWiseAsync(params, callback) {
-    axios.get(epBikeWise, {params})
+    axios.get(epBikeWise, { params })
         .then(function(response) {
-            
+
             // let fbBikeWise = response.data.incidents;
             // callback(fbBikeWise);
             // console.log(fbBikeWise);
             console.log(response);
-            
+
         });
 }
 
@@ -61,7 +59,7 @@ getDataFromBikeWiseAsync(bikewise_params_2);
 
 // Initialize API call results on Google Map
 function initMap() {
-    
+
     // Render Singapore coordinates on Google Map
     map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 1.35, lng: 103.81 },
@@ -69,33 +67,65 @@ function initMap() {
     });
 }
 
-
 // Load the locations of the data
 $(function() {
-    
+
     $("#get-bike-button").click(function() {
+
         getDataFromCityBikeAsync(function(data) {
 
             // for each bike inside the data
             for (let bike of data) {
-                
+
                 // Store each bike's latitude and longitute in bikePostion object
                 let bikePosition = {
                     lat: bike.location.latitude,
                     lng: bike.location.longitude
                 };
-                
-                console.log(bikePosition);
-                
+
                 // Drop maker for each bike's location
                 new google.maps.Marker({
+                    map: map,
                     position: bikePosition,
-                    map: map
+                    animation: google.maps.Animation.DROP
                 })
-                
             }
-            
         });
-        
     })
+
+    // Get current user's location
+    $("#get-current-location").click(function() {
+        
+        infoWindow = new google.maps.InfoWindow;
+        console.log(infoWindow);
+
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+
+            infoWindow.setPosition(pos);
+            infoWindow.setContent('Location found.');
+            infoWindow.open(map);
+            map.setCenter(pos);
+          }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+          });
+        } else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false, infoWindow, map.getCenter());
+        }
+
+    });
 });
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(browserHasGeolocation ?
+        'Error: The Geolocation service failed.' :
+        'Error: Your browser doesn\'t support geolocation.');
+    infoWindow.open(map);
+}
