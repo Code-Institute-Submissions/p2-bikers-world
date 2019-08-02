@@ -55,14 +55,14 @@ In addition, you may also use this section to discuss plans for additional featu
 - HTML
 - CSS
 - JavaScript
-- Bootstrap 4
+- [Bootstrap v4.3.1](https://getbootstrap.com/)
     - Simplify and Rapid prototype on website's styling
 - [JQuery](https://jquery.com)
     - The project uses **JQuery** to simplify DOM manipulation.
-- Google Maps JavaScript API
+- [Google Maps JavaScript API](https://developers.google.com/maps/documentation/javascript/tutorial)
 - API(s)
-    - CityBike 
-    - BikeWise
+    - [CityBike](https://api.citybik.es/v2/)
+    - [BikeWise](https://bikewise.org/documentation/api_v2)
 
 ## Testing
 
@@ -72,7 +72,7 @@ Whenever it is feasible, prefer to automate your tests, and if you've done so, p
 
 Manual Test
 1. Index (index.html)
-    1. Launch the html page by previewing it on a new tab of the browser.
+    1. Launch the html page by previewing it on a new tab of the browser, and ensure there isn't any occurrence of errors.
 2. App (app.js)
     1. Tested the script by viewing through the inspector's console. Make sure there is not any known errors.
 
@@ -114,5 +114,5 @@ In addition, if it is not obvious, you should also describe how to run your code
 - The photos used in this site were obtained from ...
 
 ### Acknowledgements
-- Stack Overflow (<a href="https://stackoverflow.com/">Link</a>)
-- Google Maps JavaScript API (<a href="https://developers.google.com/maps/documentation/javascript/markers#introduction">Link</a>)
+- [Stack Overflow](https://stackoverflow.com/)
+- [Google Maps JavaScript API](https://developers.google.com/maps/documentation/javascript/markers#introduction)
