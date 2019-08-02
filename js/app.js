@@ -142,6 +142,8 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     infoWindow.open(map);
 }
 
+
 $(document).ready(function() {
+    // Append latest year to html page footer
     $("#getDate").append(new Date().getFullYear());
 });
