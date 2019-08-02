@@ -22,20 +22,23 @@
 
     <!-- Search for bike locations -->
     <div class="container-fluid">
+
         <h3>Venue</h3>
+
         <div class="row">
             <div class="col col-xl-8 offset-xl-2">
                 <!-- Search box for user's to input the desired locations of the bicycle -->
                 <div class="input-group mb-4">
                     <input type="text" class="form-control" placeholder="Enter bike location" aria-label="bike location" aria-describedby="basic-addon2">
                     <div class="input-group-append">
-                        <button id="search-bikes-location"class="btn btn-outline-primary" type="button">Search</button>
+                        <button id="search-bikes-location" class="btn btn-outline-primary" type="button">Search</button>
                     </div>
                 </div>
                 <!-- Google Map's display -->
                 <div id="map" style='height:600px'></div>
             </div>
         </div>
+
         <div class="row">
             <div class="pt-2 pb-2 col text-center">
                 <!-- Current location function -->
@@ -48,39 +51,67 @@
         <!-- Search for bike incidents -->
         <!-- Using bootstrap card to show forum posts from BikeWise -->
         <h3>Incidents</h3>
-        <div class="input-group mb-5 col col-xl-8 offset-xl-2">
-            <input type="text" class="form-control" placeholder="Enter incident type" aria-label="search bike incidents" aria-describedby="basic-addon2">
-            <div class="input-group-append">
-                <button class="btn btn-outline-primary" type="button">Search</button>
+        <div class="container mb-5">
+
+            <div class="row">
+                <div class="input-group col-7 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
+                    <input type="text" class="form-control" placeholder="Enter incident type" aria-label="search bike incidents" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-primary" type="button">Search</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-7 col-lg-8 offset-lg-2 col-xl-3 offset-xl-2">
+                    <select class="custom-select custom-select-sm" style="width:20em">
+                      <option selected value="*">All</option>
+                      <option value="Theft">Theft</option>
+                      <option value="Hazards">Hazards</option>
+                      <option value="Crash">Crash</option>
+                      <option value="Infrastructure">Infrastructure</option>
+                      <option value="Chop Shop">Chop Shop</option>
+                    </select>
+                </div>
+                <!--<div class="col-xl-1 align-middle font-weight-light" style="width:30em">Hello</div>-->
+                <!--<div class="col-xl-1 align-middle font-weight-light" style="width:30em">Hello</div>-->
+                <!--<div class="col-xl-1 align-middle font-weight-light" style="width:30em">Hello</div>-->
             </div>
         </div>
-        
-        <div class="row mt-1 col-xl-10 offset-xl-1">
-            <div class="card text-white bg-primary mb-3 w-100">
-                <div class="card-header">Header</div>
-                <div class="card-body">
-                    <div class="card-title">Hello</div>
+
+        <div class="container">
+
+            <!-- Test cards for bike incidents information -->
+
+            <div class="row mt-1 col-xl-10 offset-xl-1">
+                <div class="card text-white bg-primary mb-3 w-100">
+                    <div class="card-header">Header</div>
+                    <div class="card-body">
+                        <div class="card-title">Hello</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-1 col-xl-10 offset-xl-1">
+                <div class="card text-white bg-secondary mb-3 w-100">
+                    <div class="card-header">Header</div>
+                    <div class="card-body">
+                        <div class="card-title">Hello</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-1 col-xl-10 offset-xl-1">
+                <div class="card text-white bg-success mb-3 w-100">
+                    <div class="card-header">Header</div>
+                    <div class="card-body">
+                        <div class="card-title">Hello</div>
+                    </div>
                 </div>
             </div>
         </div>
-        
-        <div class="row mt-1 col-xl-10 offset-xl-1">
-            <div class="card text-white bg-secondary mb-3 w-100">
-                <div class="card-header">Header</div>
-                <div class="card-body">
-                    <div class="card-title">Hello</div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="row mt-1 col-xl-10 offset-xl-1">
-            <div class="card text-white bg-success mb-3 w-100">
-                <div class="card-header">Header</div>
-                <div class="card-body">
-                    <div class="card-title">Hello</div>
-                </div>
-            </div>
-        </div>
+
+
 
     </div>
 

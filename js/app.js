@@ -50,8 +50,7 @@ function getDataFromBikeWiseAsync(params, callback) {
         });
 }
 
-
-// === Calling data retrieval function ===
+// === Function : Retrieve Data ===
 
 // Retrieve data from BikeWise API
 getDataFromBikeWiseAsync(bikewise_params);
@@ -96,21 +95,33 @@ $(function() {
     // Get current user's location
     $("#get-current-location").click(function() {
         
+        // Initialize Google's infoWindow property
         infoWindow = new google.maps.InfoWindow;
-        console.log(infoWindow);
 
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
+            
+            // Initialize current location's latitude and longitude in object, pos
             var pos = {
               lat: position.coords.latitude,
               lng: position.coords.longitude
             };
-
-            infoWindow.setPosition(pos);
-            infoWindow.setContent('Location found.');
-            infoWindow.open(map);
+            
+            // Drop marker on current location
+            new google.maps.Marker({
+              position: pos,
+              map: map,
+              animation: google.maps.Animation.DROP,
+              title: 'Here I am!'
+            });
+            
+            // infoWindow.setPosition(pos);
+            // infoWindow.setContent('Location found.');
+            // infoWindow.open(map);
+            
             map.setCenter(pos);
+            
           }, function() {
             handleLocationError(true, infoWindow, map.getCenter());
           });
@@ -122,6 +133,7 @@ $(function() {
     });
 });
 
+// Google's Geolocation error handler
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     infoWindow.setPosition(pos);
     infoWindow.setContent(browserHasGeolocation ?
