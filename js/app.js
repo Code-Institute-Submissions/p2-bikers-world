@@ -141,3 +141,7 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         'Error: Your browser doesn\'t support geolocation.');
     infoWindow.open(map);
 }
+
+$(document).ready(function() {
+    $("#getDate").append(new Date().getFullYear());
+});

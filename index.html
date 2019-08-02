@@ -53,6 +53,7 @@
         <h3>Incidents</h3>
         <div class="container mb-5">
 
+            <!-- Bike incidents search bar -->
             <div class="row">
                 <div class="input-group col-7 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
                     <input type="text" class="form-control" placeholder="Enter incident type" aria-label="search bike incidents" aria-describedby="basic-addon2">
@@ -62,16 +63,18 @@
                 </div>
             </div>
 
-            <div class="row mt-2">
-                <div class="col-7 col-lg-8 offset-lg-2 col-xl-3 offset-xl-2">
-                    <select class="custom-select custom-select-sm" style="width:20em">
-                      <option selected value="*">All</option>
-                      <option value="Theft">Theft</option>
-                      <option value="Hazards">Hazards</option>
-                      <option value="Crash">Crash</option>
-                      <option value="Infrastructure">Infrastructure</option>
-                      <option value="Chop Shop">Chop Shop</option>
-                    </select>
+            <!-- Bike incidents type selections row -->
+            <div class="row mt-2 ">
+                <div class="col-7 col-lg-8 offset-lg-2 col-xl-5 offset-xl-2">
+                    <span class="mr-3 font-weight-light">Select a type:</span>
+                    <select class="custom-select custom-select-sm" style="width:10em">
+                          <option selected value="*">All</option>
+                          <option value="Theft">Theft</option>
+                          <option value="Hazards">Hazards</option>
+                          <option value="Crash">Crash</option>
+                          <option value="Infrastructure">Infrastructure</option>
+                          <option value="Chop Shop">Chop Shop</option>
+                        </select>
                 </div>
                 <!--<div class="col-xl-1 align-middle font-weight-light" style="width:30em">Hello</div>-->
                 <!--<div class="col-xl-1 align-middle font-weight-light" style="width:30em">Hello</div>-->
@@ -79,10 +82,10 @@
             </div>
         </div>
 
+        <!-- Display bike incidents result accordingly to the search type -->
         <div class="container">
-
+            
             <!-- Test cards for bike incidents information -->
-
             <div class="row mt-1 col-xl-10 offset-xl-1">
                 <div class="card text-white bg-primary mb-3 w-100">
                     <div class="card-header">Header</div>
@@ -123,9 +126,7 @@
         <!-- Copyright -->
         <div class="footer-copyright text-center py-3">
             Copyright &copy;
-            <script>
-                document.write(new Date().getFullYear());
-            </script>
+            <span id="getDate"></span>
             Tommy Lee
         </div>
     </footer>
