@@ -19,11 +19,12 @@ They are arranged in these categories,
     <li>Chop Shop</li>
 </ul>
 
-## UX   
+## UI/UX   
  
 Use this section to provide insight into your UX process, focusing on who this website is for, what it is that they want to achieve and how your project is the best way to help them achieve these things.
 
 In particular, as part of this section we recommend that you provide a list of User Stories, with the following general structure:
+
 User Stories:
 ---> <i>(e.g. As a user type, I want to perform an action, so that I can achieve a goal.)</i>
 1. As a commuter, I want to search for shared bicycles location, so that I know where to rent them while travel across the globe.
