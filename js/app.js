@@ -1,7 +1,11 @@
 // Variables declarations
 // ----------------------------------------------------------------
-// --> Store map instance
-var map, infoWindow;
+
+var map, infoWindow; // Store map instance, infowindow from Google
+var bikeIncidents = []; // Store bike incidents
+
+// Categories of incident type - BikeWise API
+var incident_cate = ["Crash", "Hazard", "Theft", "Unconfirmed", "Infrastructure", "Chop Shop"];                    
 
 // --> BikeWise API parameters
 var bikewise_params = {
@@ -27,13 +31,14 @@ var epCityBike = "https://api.citybik.es/v2/networks";
 // -----> BikeWise API
 var epBikeWise = "https://bikewise.org:443/api/v2/incidents";
 
+
 // Data source of CityBike API
 function getDataFromCityBikeAsync(callback) {
     axios.get(epCityBike)
         .then(function(response) {
             let fbCityBike = response.data.networks;
-            console.log(fbCityBike);
             callback(fbCityBike);
+            
         });
 }
 
@@ -42,19 +47,11 @@ function getDataFromBikeWiseAsync(params, callback) {
     axios.get(epBikeWise, { params })
         .then(function(response) {
 
-            // let fbBikeWise = response.data.incidents;
-            // callback(fbBikeWise);
-            // console.log(fbBikeWise);
-            console.log(response);
-
+            let fbBikeWise = response.data.incidents;
+            callback(fbBikeWise);
+            
         });
 }
-
-// === Function : Retrieve Data ===
-
-// Retrieve data from BikeWise API
-getDataFromBikeWiseAsync(bikewise_params);
-getDataFromBikeWiseAsync(bikewise_params_2);
 
 // Initialize API call results on Google Map
 function initMap() {
@@ -94,43 +91,110 @@ $(function() {
 
     // Get current user's location
     $("#get-current-location").click(function() {
-        
+
         // Initialize Google's infoWindow property
         infoWindow = new google.maps.InfoWindow;
 
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function(position) {
-            
-            // Initialize current location's latitude and longitude in object, pos
-            var pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
-            
-            // Drop marker on current location
-            new google.maps.Marker({
-              position: pos,
-              map: map,
-              animation: google.maps.Animation.DROP,
-              title: 'Here I am!'
+            navigator.geolocation.getCurrentPosition(function(position) {
+
+                // Initialize current location's latitude and longitude in object, pos
+                var pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+
+                // Drop marker on current location
+                new google.maps.Marker({
+                    position: pos,
+                    map: map,
+                    animation: google.maps.Animation.DROP,
+                    title: 'Here I am!'
+                });
+
+                // infoWindow.setPosition(pos);
+                // infoWindow.setContent('Location found.');
+                // infoWindow.open(map);
+
+                map.setCenter(pos);
+
+            }, function() {
+                handleLocationError(true, infoWindow, map.getCenter());
             });
-            
-            // infoWindow.setPosition(pos);
-            // infoWindow.setContent('Location found.');
-            // infoWindow.open(map);
-            
-            map.setCenter(pos);
-            
-          }, function() {
-            handleLocationError(true, infoWindow, map.getCenter());
-          });
-        } else {
-          // Browser doesn't support Geolocation
-          handleLocationError(false, infoWindow, map.getCenter());
+        }
+        else {
+            // Browser doesn't support Geolocation
+            handleLocationError(false, infoWindow, map.getCenter());
         }
 
     });
+
+    // Button action to search for bike incidents
+    $("#search-bike-incidents").click(function() {
+
+        getDataFromBikeWiseAsync(bikewise_params, function(data) {
+            
+            for (let bikeInfo in data) {
+                
+                incident_result_address = data[bikeInfo].address;
+                incident_result_title = data[bikeInfo].title;
+                incident_result_descript = data[bikeInfo].description;
+                incident_result_type = data[bikeInfo].type;
+                
+                var bs_bgcolor, bs_textcolor = "text-white";
+                
+                if (incident_result_type == incident_cate[0]) {
+                    bs_bgcolor = "bg-danger";
+                    
+                } else if (incident_result_type == incident_cate[1]) {
+                    bs_bgcolor = "bg-warning";
+                    bs_textcolor = "text-dark";
+                    
+                } else if (incident_result_type == incident_cate[2]) {
+                    bs_bgcolor = "bg-dark";
+                    
+                } else if (incident_result_type == incident_cate[3]) {
+                    bs_bgcolor = ".bg-light";
+                    bs_textcolor = "text-dark";
+                    
+                } else if (incident_result_type == incident_cate[4]) {
+                    bs_bgcolor = "bg-success";
+                    
+                } else if (incident_result_type == incident_cate[5]){
+                    bs_bgcolor = "bg-primary";
+                    
+                } else {
+                    bs_bgcolor = "bg-light";
+                    bs_textcolor = "text-dark";
+                    
+                }
+                
+                console.log(
+                    incident_result_address + "\n" +
+                    incident_result_descript + "\n" + 
+                    incident_result_title + "\n" +
+                    incident_result_type
+                );
+                
+                var bsCard = "<div class='card "+ bs_textcolor + " " + bs_bgcolor + " mb-3 w-100'>" +
+                            "<div class='card-header'><h3>" + incident_result_title + "</h3></div>" +
+                            "<div class='card-body'>" +
+                                "<div class='card-title'><p>[Address] " +
+                                    incident_result_address + "</p><p>[Description] " +
+                                    incident_result_descript +
+                                "</p></div>" +
+                            "</div>" +
+                        "</div>";
+                
+                $("#incident-posts").append(bsCard);
+                
+            }
+            
+        });
+
+    });
+
 });
 
 // Google's Geolocation error handler
