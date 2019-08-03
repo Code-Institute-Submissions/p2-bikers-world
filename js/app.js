@@ -133,6 +133,10 @@ $(function() {
     // Button action to search for bike incidents
     $("#search-bike-incidents").click(function() {
 
+        // Append cards into id "incident-posts" element
+        $("#incident-posts").empty();
+        var num = 1;
+        
         getDataFromBikeWiseAsync(bikewise_params, function(data) {
             
             for (let bikeInfo in data) {
@@ -177,8 +181,9 @@ $(function() {
                     incident_result_type
                 );
                 
+                
                 var bsCard = "<div class='card "+ bs_textcolor + " " + bs_bgcolor + " mb-3 w-100'>" +
-                            "<div class='card-header'><h3>" + incident_result_title + "</h3></div>" +
+                            "<div class='card-header'><h3>" + num + ". " + incident_result_title + "</h3></div>" +
                             "<div class='card-body'>" +
                                 "<div class='card-title'><p>[Address] " +
                                     incident_result_address + "</p><p>[Description] " +
@@ -187,8 +192,10 @@ $(function() {
                             "</div>" +
                         "</div>";
                 
+                // Append cards into id "incident-posts" element
                 $("#incident-posts").append(bsCard);
                 
+                num++;
             }
             
         });
