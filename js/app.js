@@ -183,10 +183,10 @@ $(function() {
                 
                 
                 var bsCard = "<div class='card "+ bs_textcolor + " " + bs_bgcolor + " mb-3 w-100'>" +
-                            "<div class='card-header'><h3>" + num + ". " + incident_result_title + "</h3></div>" +
+                            "<div class='card-header'><h4>" + num + ". " + incident_result_title + "</h4></div>" +
                             "<div class='card-body'>" +
-                                "<div class='card-title'><p>[Address] " +
-                                    incident_result_address + "</p><p>[Description] " +
+                                "<div class='card-title'><p><b>[Address]</b> " +
+                                    incident_result_address + "</p><p><b>[Description]</b> " +
                                     incident_result_descript +
                                 "</p></div>" +
                             "</div>" +
