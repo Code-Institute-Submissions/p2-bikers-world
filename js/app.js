@@ -1,4 +1,4 @@
-// Variables declarations
+// Variables declaration
 // ----------------------------------------------------------------
 
 var map, infoWindow; // Store map instance, infowindow from Google
@@ -133,16 +133,16 @@ $(function() {
     // Button action to search for bike incidents
     $("#search-bike-incidents").click(function() {
 
+        $("#incidents-row").show();
+
         // Append cards into id "incident-posts" element
         // -----------------------------------------------
         
         // Empty child elements of selected id
-        $("#incident-posts").empty();
+        $("#incident-posts").empty()
         
         // Initialize counter for incidents post. Assign each post for better recognition.
         var num = 1;
-        
-        
         getDataFromBikeWiseAsync(bikewise_params, function(data) {
             
             for (let bikeInfo in data) {
@@ -169,7 +169,7 @@ $(function() {
                     bs_bgcolor = "bg-dark";
                     
                 } else if (incident_result_type == incident_cate[3]) {
-                    bs_bgcolor = ".bg-light";
+                    bs_bgcolor = "bg-light";
                     bs_textcolor = "text-dark";
                     
                 } else if (incident_result_type == incident_cate[4]) {
@@ -191,8 +191,7 @@ $(function() {
                     incident_result_type
                 );
                 
-                
-                var bsCard = "<div class='card "+ bs_textcolor + " " + bs_bgcolor + " mb-3 w-100'>" +
+                var bsCard = "<div class='card "+ bs_textcolor + " " + bs_bgcolor + " mb-3'>" +
                             "<div class='card-header'><h4>" + num + ". " + incident_result_title + "</h4></div>" +
                             "<div class='card-body'>" +
                                 "<div class='card-title'><p><b>[Address]</b> " +
@@ -205,6 +204,7 @@ $(function() {
                 // Append cards into id "incident-posts" element
                 $("#incident-posts").append(bsCard);
                 
+                // Increment incident post number
                 num++;
             }
             
@@ -227,4 +227,6 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 $(document).ready(function() {
     // Append latest year to html page footer
     $("#getDate").append(new Date().getFullYear());
+    // Hide row with "incidents-row" id
+    $("#incidents-row").hide();
 });
