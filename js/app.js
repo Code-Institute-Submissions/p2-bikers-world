@@ -134,20 +134,30 @@ $(function() {
     $("#search-bike-incidents").click(function() {
 
         // Append cards into id "incident-posts" element
+        // -----------------------------------------------
+        
+        // Empty child elements of selected id
         $("#incident-posts").empty();
+        
+        // Initialize counter for incidents post. Assign each post for better recognition.
         var num = 1;
+        
         
         getDataFromBikeWiseAsync(bikewise_params, function(data) {
             
             for (let bikeInfo in data) {
                 
+                // Retrieve values from BikeWise API call
                 incident_result_address = data[bikeInfo].address;
                 incident_result_title = data[bikeInfo].title;
                 incident_result_descript = data[bikeInfo].description;
                 incident_result_type = data[bikeInfo].type;
                 
+                // Initialize bootstrap variables for both
+                // background-color and text-color
                 var bs_bgcolor, bs_textcolor = "text-white";
                 
+                // Assign bootstrap background color when value equal type
                 if (incident_result_type == incident_cate[0]) {
                     bs_bgcolor = "bg-danger";
                     
@@ -171,9 +181,9 @@ $(function() {
                 } else {
                     bs_bgcolor = "bg-light";
                     bs_textcolor = "text-dark";
-                    
                 }
                 
+                // Test return fields from BikeWise API call ...
                 console.log(
                     incident_result_address + "\n" +
                     incident_result_descript + "\n" + 

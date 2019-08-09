@@ -6,9 +6,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+    <!-- Self-wrote CSS -->
+    <link rel="stylesheet" href="style.css">
 
     <!-- Axios API to help assist in data retrieval -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -19,22 +21,21 @@
 <body>
 
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-dark bg-dark text-white sticky-top">
-        <h1>
-            <span class="align-middle">
-                Biker's World
-            </span>
-            <img src="mountain-bike-icon.png" alt="Mountain-Bike"/>
-        </h1>
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg text-white sticky-top">
+        <a class="navbar-brand align-middle" href="index.html">
+            <h3 class="align-top mb-0">
+                <img src="mountain-bike-icon.png" alt="Mountain-Bike" width="35" height="35" class="mr-2" />
+                <span class="align-middle">Biker's World</span>
+                <img src="mountain-bike-icon.png" alt="Mountain-Bike" width="35" height="35" class="ml-2" />
+            </h3>
+        </a>
     </nav>
 
-    <!-- Search for bike locations -->
-    <div class="container-fluid">
-
-        <h3>Venue</h3>
-
+    <!-- Search Function === Bike Locations -->
+    <div class="container-fluid mt-3">
         <div class="row">
             <div class="col col-xl-8 offset-xl-2">
+                <h4>Venue</h4>
                 <!-- Search box for user's to input the desired locations of the bicycle -->
                 <div class="input-group mb-4">
                     <input type="text" class="form-control" placeholder="Enter bike location" aria-label="bike location" aria-describedby="basic-addon2">
@@ -46,7 +47,6 @@
                 <div id="map" style='height:600px'></div>
             </div>
         </div>
-
         <div class="row">
             <div class="pt-2 pb-2 col text-center">
                 <!-- Current location function -->
@@ -57,29 +57,26 @@
         </div>
     </div>
 
-    <div class="container-fluid">
+    <!-- Horizontal rule to segregate between different functions -->
+    <hr style="width:75rem" />
 
-        <!-- Search for bike incidents -->
-        <!-- Using bootstrap card to show forum posts from BikeWise -->
-        <h3>Incidents</h3>
-
-        <div class="container mb-5">
-
-            <!-- Bike incidents search bar -->
-            <div class="row">
-                <div class="input-group col-7 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
+    <!-- Search function === Bike Incidents -->
+    <div class="container-fluid mt-3">
+        <div class="row">
+            <div class="col col-7 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
+                <h4>Incidents</h4>
+                <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter incident type" aria-label="search bike incidents" aria-describedby="basic-addon2">
                     <div class="input-group-append">
                         <button id="search-bike-incidents" class="btn btn-outline-primary" type="button">Search</button>
                     </div>
                 </div>
             </div>
-
-            <!-- Bike incidents type selections row -->
-            <div class="row mt-2">
-                <div class="col-7 col-lg-8 offset-lg-2 col-xl-5 offset-xl-2">
-                    <span class="mr-3 font-weight-light">Select a type:</span>
-                    <select class="custom-select custom-select-sm" style="width:10em">
+        </div>
+        <div class="row mt-2">
+            <div class="col-7 col-lg-8 offset-lg-2 col-xl-5 offset-xl-2">
+                <span class="mr-3 font-weight-light">Select a type:</span>
+                <select class="custom-select custom-select-sm" style="width:10em">
                       <option selected value="*">All</option>
                       <option value="Crash">Crash</option>
                       <option value="Hazard">Hazard</option>
@@ -87,26 +84,13 @@
                       <option value="Unconfirmed">Unconfirmed</option>
                       <option value="Infrastructure">Infrastructure</option>
                       <option value="Chop Shop">Chop Shop</option>
-                    </select>
-                </div>
+                </select>
             </div>
         </div>
-
-        <!-- Display bike incidents result accordingly to the search type -->
-        <div class="container mt-1 mb-2 overflow-auto" style="height:25em">
-            
-            <!-- Test cards for bike incidents information -->
-            <div class="row">
-                
-                <div id="incident-posts" class="col-xl-10 offset-xl-1">
-                </div>
-
-            </div>
-
-            <!-- end of container | bike incidents search section -->
+        <div id="incidents-row" class="row mt-1 mb-2 overflow-auto" style="height:25em">
+            <!-- Generate incidents in card format -->
+            <div id="incident-posts" class="col-xl-10 offset-xl-1"></div>
         </div>
-
-        <!-- end of container-fluid | the bike incident section -->
     </div>
 
     <!-- Footer -->
