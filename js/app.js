@@ -1,17 +1,34 @@
 // Variables declaration
 // ----------------------------------------------------------------
 
+/**
+ * Google Maps API
+ * General variable(s)
+ * --> (1) map          === Display map on website
+ * --> (2) infoWindow   === Display output message on marker
+ * --> (3) marker       === Display marker on google map
+ */
 var map, infoWindow;    // Store map instance, infowindow from Google
 var marker;
-var mapLocations = [];
 
-var bikeIncidents = []; // Store bike incidents
+var epBikeWise = "https://bikewise.org:443/api/v2/incidents";
+var epCityBike = "https://api.citybik.es/v2/networks";
 
-// Categories of incident type - BikeWise API
+/**
+ * CityBike API variables
+ * Store map locations as objects within array(s)
+ * --> (1) mapLocations     === Map locations of registered bicycles
+ * --> (2) mapInstance      === Current user location
+ */
+var mapLocations = [];  // Store map location as objects within array for CityBike features
+var mapInstance = [];
+
+/**
+ * BikeWise API variables
+ * --> (1) incident_cate    === Prefixed available incident categories from BikeWise
+ * --> (2) bikewise_params  === Insert parameters into API upon request
+ */
 var incident_cate = ["Crash", "Hazard", "Theft", "Unconfirmed", "Infrastructure", "Chop Shop"];                    
-
-
-// --> BikeWise API parameters
 var bikewise_params = {
     'page': 1,
     // 'per_page': 50,
@@ -29,14 +46,18 @@ var bikewise_params_2 = {
     'query': ''
 };
 
-// --- Store API link
-// -----> CityBikes API
-var epCityBike = "https://api.citybik.es/v2/networks";
-// -----> BikeWise API
-var epBikeWise = "https://bikewise.org:443/api/v2/incidents";
 
 
-// Data source of CityBike API
+/** =======================================================================================================
+*   =======================================================================================================
+*   =======================================================================================================
+*                                                                                       REST OF THE PROGRAM
+*   =======================================================================================================
+*   =======================================================================================================
+*   =======================================================================================================
+*/
+
+// CityBike API data source
 function getDataFromCityBikeAsync(callback) {
     axios.get(epCityBike)
         .then(function(response) {
@@ -46,7 +67,7 @@ function getDataFromCityBikeAsync(callback) {
         });
 }
 
-// Data source of BikeWise API
+// BikeWise API data source
 function getDataFromBikeWiseAsync(params, callback) {
     axios.get(epBikeWise, { params })
         .then(function(response) {
@@ -149,13 +170,16 @@ $(function() {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 };
+                
+                // 
+                mapLocations2.push(pos);
 
                 // Drop marker on current location
                 var currMarker = new google.maps.Marker({
                     position: pos,
                     map: map,
                     animation: google.maps.Animation.DROP,
-                    title: 'Here I am!'
+                    title: 'HERE I AM!'
                 });                                
 
                 currMarker.addListener('click', function() {
