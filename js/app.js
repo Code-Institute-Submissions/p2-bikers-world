@@ -1,11 +1,15 @@
 // Variables declaration
 // ----------------------------------------------------------------
 
-var map, infoWindow; // Store map instance, infowindow from Google
+var map, infoWindow;    // Store map instance, infowindow from Google
+var marker;
+var mapLocations = [];
+
 var bikeIncidents = []; // Store bike incidents
 
 // Categories of incident type - BikeWise API
 var incident_cate = ["Crash", "Hazard", "Theft", "Unconfirmed", "Infrastructure", "Chop Shop"];                    
+
 
 // --> BikeWise API parameters
 var bikewise_params = {
@@ -59,37 +63,78 @@ function initMap() {
     // Render Singapore coordinates on Google Map
     map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 1.35, lng: 103.81 },
-        zoom: 3
+        zoom: 4
     });
+    
 }
 
-// Load the locations of the data
+// Execute code when script is loaded
 $(function() {
 
+    // Append latest year to html page footer
+    $("#getDate").append(new Date().getFullYear());
+    
+    // Hide rows from selected id
+    $("#incidents-row").hide();
+
+    // FUNCTION : Retrieve ALL bike locations that is registered worldwide
     $("#get-bike-button").click(function() {
+                
+        getDataFromCityBikeAsync(function(data) {            
+            
+            // Clear array
+            mapLocations = [];
 
-        getDataFromCityBikeAsync(function(data) {
-
-            // for each bike inside the data
             for (let bike of data) {
-
-                // Store each bike's latitude and longitute in bikePostion object
+                /** 
+                    Assign bike locations in latitude and longitute and allocate
+                    them in "bikePostiion" object variable.
+                */
                 let bikePosition = {
                     lat: bike.location.latitude,
                     lng: bike.location.longitude
-                };
-
-                // Drop maker for each bike's location
-                new google.maps.Marker({
-                    map: map,
-                    position: bikePosition,
-                    animation: google.maps.Animation.DROP
-                })
+                };                
+                /**
+                    Add bike locations in object, into "mapLocations" array variable
+                    for later use in marker clustering.
+                */
+                mapLocations.push(bikePosition);                                           
             }
+            
+            /**
+             * Initialize "markers" variable,
+             * allocate markers with defined properties
+             * --> map
+             * --> map position
+             * --> map animation
+             * and, return the markers for display on map later
+             */
+            
+            for (var x = 0; x < mapLocations.length; x++) {                
+                marker = new google.maps.Marker({
+                    map: map,
+                    position: (mapLocations[x]),
+                    animation: google.maps.Animation.DROP
+                });
+            }            
+
+            // marker = mapLocations.map(function(location) {                
+            //     return new google.maps.Marker({
+            //         map: map,
+            //         position: location,
+            //         animation: google.maps.Animation.DROP
+            //     });
+            // });
+
+            // Add marker clusterer to manage the markers.
+            new MarkerClusterer(map, marker, {
+                imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+            });
+
         });
     })
 
-    // Get current user's location
+    // FUNCTION : Get current user's location
     $("#get-current-location").click(function() {
 
         // Initialize Google's infoWindow property
@@ -106,17 +151,18 @@ $(function() {
                 };
 
                 // Drop marker on current location
-                new google.maps.Marker({
+                var currMarker = new google.maps.Marker({
                     position: pos,
                     map: map,
                     animation: google.maps.Animation.DROP,
                     title: 'Here I am!'
-                });
+                });                                
 
-                // infoWindow.setPosition(pos);
-                // infoWindow.setContent('Location found.');
-                // infoWindow.open(map);
-
+                currMarker.addListener('click', function() {
+                    map.setZoom(9);
+                    map.setCenter(currMarker.getPosition());
+                })
+                // Centralized map position
                 map.setCenter(pos);
 
             }, function() {
@@ -133,6 +179,7 @@ $(function() {
     // Button action to search for bike incidents
     $("#search-bike-incidents").click(function() {
 
+        // Show rows from selected id
         $("#incidents-row").show();
 
         // Append cards into id "incident-posts" element
@@ -223,10 +270,23 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     infoWindow.open(map);
 }
 
+// // Execute actions when javascript is loaded
+// $(document).ready(function() {
+    
+// });
 
-$(document).ready(function() {
-    // Append latest year to html page footer
-    $("#getDate").append(new Date().getFullYear());
-    // Hide row with "incidents-row" id
-    $("#incidents-row").hide();
-});
+/* CityBike
+1. Autocomplete users input
+2. Take users input and shift them to suggested location on G Maps
+3. Locate the bikes with a selected radius in KM
+
+*/
+
+
+/* Bikewise
+1. Take users input and put in variable for API process
+2. Users can choose different type of variations.
+3. Users can select how many results to display     --- *BONUS*
+4. Users can flip to different pages                --- *BONUS*
+
+*/
