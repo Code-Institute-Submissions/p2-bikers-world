@@ -1,0 +1,12 @@
+/*    --- Personal CSS stylesheet
+Designed for Project 2
+==============================================================
+*/
+
+/*    --- Make font style within placeholder to be italic
+    across all browsers.
+*/
+
+::placeholder {
+    font-style: italic;
+}
