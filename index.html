@@ -7,8 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
     <!-- Self-wrote CSS -->
     <link rel="stylesheet" href="style.css">
 
@@ -39,19 +40,20 @@
                 <h4>Venue</h4>
                 <!-- Search box for user's to input the desired locations of the bicycle -->
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Enter bike locations... e.g. " aria-label="bike location" aria-describedby="basic-addon2">
+                    <input type="text" class="form-control" placeholder="Enter bike locations... e.g. "
+                        aria-label="bike location" aria-describedby="basic-addon2">
                     <div class="input-group-append">
                         <button id="search-bikes-location" class="btn btn-outline-primary" type="button">Search</button>
                     </div>
                 </div>
-                <div class="mt-2 mb-2 text-center">
+                <div class="mt-2 mb-2">
                     <!-- Current location function -->
                     <button id="get-current-location" class="btn btn-primary">Current Location</button>
                     <!-- Search function -->
                     <button id="get-bike-button" class="btn btn-primary">Locate Bike!</button>
                 </div>
                 <!-- Google Map's display -->
-                <div id="map" class="mt-4" style='height:37.5rem'></div>
+                <div id="map" class="mt-4"></div>
             </div>
         </div>
     </div>
@@ -62,38 +64,58 @@
     <!-- Search function === Bike Incidents -->
     <div class="container-fluid mt-3">
         <div class="row">
-            <div class="col col-7 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
+            <div class="col col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
                 <h4>Incidents</h4>
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for a incident... (e.g. bicycle incidents in Australia)" aria-label="search bike incidents" aria-describedby="basic-addon2" id="incidentSearchInput">
+                    <input type="text" class="form-control"
+                        placeholder="Search for a incident... (e.g. bicycle incidents in Australia)"
+                        aria-label="search bike incidents" aria-describedby="basic-addon2" id="incidentSearchInput">
                     <div class="input-group-append">
                         <button id="search-bike-incidents" class="btn btn-outline-primary" type="button">Search</button>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row mt-2 mb-4">
-            <div class="col-7 col-lg-8 offset-lg-2 col-xl-5 offset-xl-2">
-                <span class="mr-3 font-weight-light">Select a type:</span>
-                <select class="custom-select custom-select-sm" style="width:10em" id="incident-type-selectBox">
-                      <option selected value="">All</option>
-                      <option value="crash">Crash</option>
-                      <option value="hazard">Hazard</option>
-                      <option value="theft">Theft</option>
-                      <option value="unconfirmed">Unconfirmed</option>
-                      <option value="infrastructure_issue">Infrastructure</option>
-                      <option value="chop_shop">Chop Shop</option>
-                </select>
+        <div class="row">
+            <div class="col col-lg-8 offset-lg-2 col-xl-4 mt-2 mb-2">
+                <button type="button" class="btn btn-sm btn-primary" data-toggle="collapse"
+                    data-target="#incident-advancedSearch">Advanced Options</button>
             </div>
         </div>
-        <div id="incidents-row" class="row mt-1 mb-2 overflow-auto" style="height:25em">
-            <!-- Generate incidents in card format -->
-            <div id="incident-posts" class="col col-7 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2 pl-3 pr-1"></div>
+        <div id="incident-advancedSearch" class="row collapse mb-2">
+            <!-- <div id="incident-advancedSearch" class="collapse"> -->
+            <!-- <div class="row mt-2 mb-4"> -->
+            <div class="col col-lg-4 offset-lg-2 col-xl-4">
+                <span class="mr-3 font-weight-light">Select a type:</span>
+                <select class="custom-select custom-select-sm" style="width:10em" id="incident-type-selectBox">
+                    <option selected value="">All</option>
+                    <option value="crash">Crash</option>
+                    <option value="hazard">Hazard</option>
+                    <option value="theft">Theft</option>
+                    <option value="unconfirmed">Unconfirmed</option>
+                    <option value="infrastructure_issue">Infrastructure</option>
+                    <option value="chop_shop">Chop Shop</option>
+                </select>
+            </div>
+            <div class="col col-lg-5 col-xl-5">
+                <button class="btn btn-sm bg-danger text-white" style="width:7em"><i>Crash</i></button>
+                <button class="btn btn-sm bg-warning" style="width:7em"><i>Hazard</i></button>
+                <button class="btn btn-sm bg-dark text-white" style="width:7em"><i>Theft</i></button>
+                <button class="btn btn-sm bg-light" style="width:7em"><i>Unconfirmed</i></button>
+                <button class="btn btn-sm bg-success text-white" style="width:7em"><i>Infrastructure</i></button>
+                <button class="btn btn-sm bg-primary text-white" style="width:7em"><i>Chop Shop</i></button>
+            </div>
+            <!-- </div> -->
         </div>
+        <div id="incidents-row" class="row mb-2 overflow-auto" style="height:25em">
+            <!-- Generate incidents in card format -->
+            <div id="incident-posts" class="col-12 col-md-10 col-lg-12 col-xl-8 offset-xl-2"></div>
+        </div>
+
     </div>
 
     <!-- Footer -->
-    <footer class="page-footer font-small text-white bg-dark">
+    <footer class="page-footer font-small text-white bg-dark mt-2">
         <!-- Copyright -->
         <div class="footer-copyright text-center py-3">
             Copyright &copy;
@@ -103,19 +125,28 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 
     <!-- Own JavaScript implementation for project #2 -->
     <script src="js/app.js"></script>
 
     <!-- Maker Clusterer API from Google -->
-    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
-    </script>
+    <script
+        src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+        </script>
 
     <!-- Google Maps API for TGC project -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDk7VVZE0HN64Io6HSp5h7Vo4Orh4wqpqY&callback=initMap&libraries=places" async defer></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDk7VVZE0HN64Io6HSp5h7Vo4Orh4wqpqY&callback=initMap&libraries=places"
+        async defer></script>
 
 </body>
 

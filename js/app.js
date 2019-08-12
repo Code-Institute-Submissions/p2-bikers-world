@@ -28,27 +28,8 @@ var mapInstance = [];
  * --> (1) incident_cate    === Prefixed available incident categories from BikeWise
  * --> (2) bikewise_params  === Insert parameters into API upon request
  */
-var incident_cate = ["Crash", "Hazard", "Theft", "Unconfirmed", "Infrastructure", "Chop Shop"];                    
+var incident_cate = ["Crash", "Hazard", "Theft", "Unconfirmed", "Infrastructure issue", "Chop Shop"];                    
 var bikewise_params = {};
-// var bikewise_params = {
-//     'page': 1,
-//     // 'per_page': 50,
-//     // 'incident_type': '',
-//     // 'proximity': '',
-//     'proximity_square': 100,
-//     'query': ''
-// };
-
-// var bikewise_params_2 = {
-//     'page': 5,
-//     'per_page': 50,
-//     // 'incident_type': '',
-//     // 'proximity': '',
-//     'proximity_square': 1000,
-//     'query': ''
-// };
-
-
 
 /** =======================================================================================================
 *   =======================================================================================================
@@ -74,7 +55,7 @@ function getDataFromBikeWiseAsync(params, callback) {
     axios.get(epBikeWise, { params })
         .then(function(response) {
 
-            let fbBikeWise = response.data.incidents;
+            let fbBikeWise = response.data.incidents;        
             callback(fbBikeWise);
             
         });
@@ -226,20 +207,18 @@ $(function() {
         }
 
         /**
-         * Instantiate variables to retrieve values from ...
+         * Instantiate variables to retrieve values from
          * --> 1. Incidents search box
          * --> 2. Incidents type select box
          */  
         var incident_search_val = $("#incidentSearchInput").val();
         if (incident_search_val) {
             params["incident_search_val"] = incident_search_val;
-
         }
 
         var incident_type_val = $( "#incident-type-selectBox option:selected").val();        
         if (incident_type_val) {
             params["incident_type"] = incident_type_val;
-
         }
         
         // Initialize bikewise api parameters for API consumption.
@@ -248,10 +227,10 @@ $(function() {
         console.log(bikewise_params);
 
         // Initialize counter for incidents post. Assign each post for better recognition.
-        var num = 1;
+        var incidentPostNo = 1;
         
-        getDataFromBikeWiseAsync(bikewise_params, function(data) {
-            
+        getDataFromBikeWiseAsync(bikewise_params, function(data) {            
+
             for (let bikeInfo in data) {
                 
                 // Retrieve values from BikeWise API call
@@ -288,18 +267,11 @@ $(function() {
                 } else {
                     bs_bgcolor = "bg-light";
                     bs_textcolor = "text-dark";
-                }
-                
-                // Test return fields from BikeWise API call ...
-                console.log(
-                    incident_result_address + "\n" +
-                    incident_result_descript + "\n" + 
-                    incident_result_title + "\n" +
-                    incident_result_type
-                );
+
+                }                
                 
                 var bsCard = "<div class='card "+ bs_textcolor + " " + bs_bgcolor + " mb-3'>" +
-                            "<div class='card-header'><h4>" + num + ". " + incident_result_title + "</h4></div>" +
+                            "<div class='card-header'><h4>" + incidentPostNo + ". " + incident_result_title + "</h4></div>" +
                             "<div class='card-body'>" +
                                 "<div class='card-title'><p><b>Incident location<br></b> " +
                                     incident_result_address + "</p><p><b>Incident details<br></b> " +
@@ -312,7 +284,7 @@ $(function() {
                 $("#incident-posts").append(bsCard);
                 
                 // Increment incident post number
-                num++;
+                incidentPostNo++;
             }
             
         });
@@ -330,10 +302,6 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     infoWindow.open(map);
 }
 
-// // Execute actions when javascript is loaded
-// $(document).ready(function() {
-    
-// });
 
 /* CityBike
 1. Autocomplete users input
@@ -344,8 +312,6 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 
 
 /* Bikewise
-1. Take users input and put in variable for API process
-2. Users can choose different type of variations.
 3. Users can select how many results to display     --- *BONUS*
 4. Users can flip to different pages                --- *BONUS*
 
