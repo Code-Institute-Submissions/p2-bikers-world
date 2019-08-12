@@ -40,7 +40,7 @@
                 <h4>Venue</h4>
                 <!-- Search box for user's to input the desired locations of the bicycle -->
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Enter bike locations... e.g. "
+                    <input type="text" id="pac-input" class="form-control" placeholder="Enter a location... e.g. Sans Francisco, London, Singapore, Malaysia... "
                         aria-label="bike location" aria-describedby="basic-addon2">
                     <div class="input-group-append">
                         <button id="search-bikes-location" class="btn btn-outline-primary" type="button">Search</button>
@@ -48,9 +48,9 @@
                 </div>
                 <div class="mt-2 mb-2">
                     <!-- Current location function -->
-                    <button id="get-current-location" class="btn btn-primary">Current Location</button>
+                    <button id="get-current-location" class="btn btn-sm btn-primary">Current Location</button>
                     <!-- Search function -->
-                    <button id="get-bike-button" class="btn btn-primary">Locate Bike!</button>
+                    <button id="get-bike-button" class="btn btn-sm btn-primary">Locate Bike!</button>
                 </div>
                 <!-- Google Map's display -->
                 <div id="map" class="mt-4"></div>

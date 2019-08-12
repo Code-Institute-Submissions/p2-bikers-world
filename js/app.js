@@ -10,7 +10,13 @@
  */
 var map, infoWindow;    // Store map instance, infowindow from Google
 var marker;
+var gMarkers = [];
 
+/**
+ * API Links
+ * --> 1. BikeWise
+ * --> 2. CityBike
+ */
 var epBikeWise = "https://bikewise.org:443/api/v2/incidents";
 var epCityBike = "https://api.citybik.es/v2/networks";
 
@@ -28,7 +34,7 @@ var mapInstance = [];
  * --> (1) incident_cate    === Prefixed available incident categories from BikeWise
  * --> (2) bikewise_params  === Insert parameters into API upon request
  */
-var incident_cate = ["Crash", "Hazard", "Theft", "Unconfirmed", "Infrastructure issue", "Chop Shop"];                    
+var incident_cate = ["Crash", "Hazard", "Theft", "Unconfirmed", "Infrastructure issue", "Chop Shop"];
 var bikewise_params = {};
 
 /** =======================================================================================================
@@ -43,22 +49,27 @@ var bikewise_params = {};
 // CityBike API data source
 function getDataFromCityBikeAsync(callback) {
     axios.get(epCityBike)
-        .then(function(response) {
+        .then(function (response) {
             let fbCityBike = response.data.networks;
             callback(fbCityBike);
-            
+
         });
 }
 
 // BikeWise API data source
 function getDataFromBikeWiseAsync(params, callback) {
     axios.get(epBikeWise, { params })
-        .then(function(response) {
-
-            let fbBikeWise = response.data.incidents;        
+        .then(function (response) {
+            let fbBikeWise = response.data.incidents;
             callback(fbBikeWise);
-            
+
         });
+}
+
+function setMapOnAll(map) {
+    for (var i = 0; i < gMarkers.length; i++) {
+        gMarkers[i].setMap(map);
+    }
 }
 
 // Initialize API call results on Google Map
@@ -69,23 +80,77 @@ function initMap() {
         center: { lat: 1.35, lng: 103.81 },
         zoom: 4
     });
-    
+
+    var uInput = document.getElementById("pac-input");
+    var autocomplete = new google.maps.places.Autocomplete(uInput);
+
+    // CLear all markers
+    setMapOnAll(null);
+    console.log("Step1");
+
+    // Set the data fields to return when the user selects a place.
+    autocomplete.setFields(['address_components', 'geometry', 'icon', 'name']);
+    var marker = new google.maps.Marker({
+        map: map
+        // anchorPoint: new google.maps.Point(0, -29)
+    });
+    gMarkers.push(marker);
+
+    autocomplete.addListener('place_changed', function () {
+        // infowindow.close();
+        marker.setVisible(false);
+        var place = autocomplete.getPlace();
+        if (!place.geometry) {
+            // User entered the name of a Place that was not suggested and
+            // pressed the Enter key, or the Place Details request failed.
+            window.alert("No details available for input: '" + place.name + "'");
+            return;
+        }
+
+        // If the place has a geometry, then present it on a map.
+        if (place.geometry.viewport) {
+            map.fitBounds(place.geometry.viewport);
+        } else {
+            map.setCenter(place.geometry.location);
+            map.setZoom(17);  // Why 17? Because it looks good.
+        }
+        marker.setPosition(place.geometry.location);
+        marker.setVisible(true);
+
+        var address = '';
+        if (place.address_components) {
+            address = [
+                (place.address_components[0] && place.address_components[0].short_name || ''),
+                (place.address_components[1] && place.address_components[1].short_name || ''),
+                (place.address_components[2] && place.address_components[2].short_name || '')
+            ].join(' ');
+        }
+
+        // infowindowContent.children['place-icon'].src = place.icon;
+        // infowindowContent.children['place-name'].textContent = place.name;
+        // infowindowContent.children['place-address'].textContent = address;
+        // infowindow.open(map, marker);
+
+    });
 }
 
 // Execute code when script is loaded
-$(function() {
+$(function () {
 
     // Append latest year to html page footer
     $("#getDate").append(new Date().getFullYear());
-    
+
     // Hide rows from selected id
     $("#incidents-row").hide();
 
     // FUNCTION : Retrieve ALL bike locations that is registered worldwide
-    $("#get-bike-button").click(function() {
-                
-        getDataFromCityBikeAsync(function(data) {            
-            
+    $("#get-bike-button").click(function () {
+
+        setMapOnAll(null);
+        console.log("Step2: " + gMarkers);
+
+        getDataFromCityBikeAsync(function(data) {
+
             // Clear array
             mapLocations = [];
 
@@ -97,14 +162,14 @@ $(function() {
                 let bikePosition = {
                     lat: bike.location.latitude,
                     lng: bike.location.longitude
-                };                
+                };
                 /**
                     Add bike locations in object, into "mapLocations" array variable
                     for later use in marker clustering.
                 */
-                mapLocations.push(bikePosition);                                           
+                mapLocations.push(bikePosition);
             }
-            
+
             /**
              * Initialize "markers" variable,
              * allocate markers with defined properties
@@ -113,14 +178,15 @@ $(function() {
              * --> map animation
              * and, return the markers for display on map later
              */
-            
-            for (var x = 0; x < mapLocations.length; x++) {                
+
+            for (var x = 0; x < mapLocations.length; x++) {
                 marker = new google.maps.Marker({
                     map: map,
                     position: (mapLocations[x]),
                     animation: google.maps.Animation.DROP
                 });
-            }            
+                gMarkers.push(marker);
+            }
 
             // marker = mapLocations.map(function(location) {                
             //     return new google.maps.Marker({
@@ -130,8 +196,9 @@ $(function() {
             //     });
             // });
 
+            console.log("How does marker look like? " + marker);
             // Add marker clusterer to manage the markers.
-            new MarkerClusterer(map, marker, {
+            new MarkerClusterer(map, gMarkers, {
                 imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
             });
 
@@ -139,40 +206,41 @@ $(function() {
     })
 
     // FUNCTION : Get current user's location
-    $("#get-current-location").click(function() {
+    $("#get-current-location").click(function () {
 
         // Initialize Google's infoWindow property
         infoWindow = new google.maps.InfoWindow;
 
+        setMapOnAll(null);
+
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
+            navigator.geolocation.getCurrentPosition(function (position) {
 
                 // Initialize current location's latitude and longitude in object, pos
                 var pos = {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 };
-
-                mapInstance.push(pos);
-
+                
                 // Drop marker on current location
                 var currMarker = new google.maps.Marker({
                     position: pos,
                     map: map,
                     animation: google.maps.Animation.DROP,
                     title: 'HERE I AM!'
-                });                                
+                });
+                gMarkers.push(currMarker);
 
                 // 
-                currMarker.addListener('click', function() {
-                    map.setZoom(10);
+                currMarker.addListener('click', function () {
+                    map.setZoom(17);
                     map.setCenter(currMarker.getPosition());
                 })
                 // Centralized map position
-                map.setCenter(pos);
+                map.setCenter(pos);                
 
-            }, function() {
+            }, function () {
                 handleLocationError(true, infoWindow, map.getCenter());
             });
         }
@@ -184,14 +252,14 @@ $(function() {
     });
 
     // Button action to search for bike incidents
-    $("#search-bike-incidents").click(function() {
+    $("#search-bike-incidents").click(function () {
 
         // Show rows from selected id
         $("#incidents-row").show();
 
         // Append cards into id "incident-posts" element
         // -----------------------------------------------
-        
+
         // Empty child elements of selected id
         $("#incident-posts").empty()
 
@@ -202,7 +270,7 @@ $(function() {
          * --> "proximity_square" - Distance between search and incidents location
          */
         var params = {
-            'page': 1,            
+            'page': 1,
             'proximity_square': 100,
         }
 
@@ -210,83 +278,83 @@ $(function() {
          * Instantiate variables to retrieve values from
          * --> 1. Incidents search box
          * --> 2. Incidents type select box
-         */  
+         */
         var incident_search_val = $("#incidentSearchInput").val();
         if (incident_search_val) {
             params["incident_search_val"] = incident_search_val;
         }
 
-        var incident_type_val = $( "#incident-type-selectBox option:selected").val();        
+        var incident_type_val = $("#incident-type-selectBox option:selected").val();
         if (incident_type_val) {
             params["incident_type"] = incident_type_val;
         }
-        
+
         // Initialize bikewise api parameters for API consumption.
         bikewise_params = params;
-        
+
         console.log(bikewise_params);
 
         // Initialize counter for incidents post. Assign each post for better recognition.
         var incidentPostNo = 1;
-        
-        getDataFromBikeWiseAsync(bikewise_params, function(data) {            
+
+        getDataFromBikeWiseAsync(bikewise_params, function (data) {
 
             for (let bikeInfo in data) {
-                
+
                 // Retrieve values from BikeWise API call
                 incident_result_address = data[bikeInfo].address;
                 incident_result_title = data[bikeInfo].title;
                 incident_result_descript = data[bikeInfo].description;
                 incident_result_type = data[bikeInfo].type;
-                
+
                 // Initialize bootstrap variables for both
                 // background-color and text-color
                 var bs_bgcolor, bs_textcolor = "text-white";
-                
+
                 // Assign bootstrap background color when value equal type
                 if (incident_result_type == incident_cate[0]) {
                     bs_bgcolor = "bg-danger";
-                    
+
                 } else if (incident_result_type == incident_cate[1]) {
                     bs_bgcolor = "bg-warning";
                     bs_textcolor = "text-dark";
-                    
+
                 } else if (incident_result_type == incident_cate[2]) {
                     bs_bgcolor = "bg-dark";
-                    
+
                 } else if (incident_result_type == incident_cate[3]) {
                     bs_bgcolor = "bg-light";
                     bs_textcolor = "text-dark";
-                    
+
                 } else if (incident_result_type == incident_cate[4]) {
                     bs_bgcolor = "bg-success";
-                    
-                } else if (incident_result_type == incident_cate[5]){
+
+                } else if (incident_result_type == incident_cate[5]) {
                     bs_bgcolor = "bg-primary";
-                    
+
                 } else {
                     bs_bgcolor = "bg-light";
                     bs_textcolor = "text-dark";
 
-                }                
-                
-                var bsCard = "<div class='card "+ bs_textcolor + " " + bs_bgcolor + " mb-3'>" +
-                            "<div class='card-header'><h4>" + incidentPostNo + ". " + incident_result_title + "</h4></div>" +
-                            "<div class='card-body'>" +
-                                "<div class='card-title'><p><b>Incident location<br></b> " +
-                                    incident_result_address + "</p><p><b>Incident details<br></b> " +
-                                    incident_result_descript +
-                                "</p></div>" +
-                            "</div>" +
-                        "</div>";
-                
+                }
+
+                var bsCard = "<div class='card " + bs_textcolor + " " + bs_bgcolor + " mb-3'>" +
+                    "<div class='card-header'><h4>" + incidentPostNo + ". " + incident_result_title + "</h4></div>" +
+                    "<div class='card-body'>" +
+                    "<div class='card-title'><p><b>Incident location<br></b> " +
+                    incident_result_address + "</p><p><b>Incident details<br></b> " +
+                    incident_result_descript +
+                    "</p></div>" +
+                    "</div>" +
+                    "</div>";
+
                 // Append cards into id "incident-posts" element
                 $("#incident-posts").append(bsCard);
-                
+
                 // Increment incident post number
                 incidentPostNo++;
             }
-            
+
         });
 
     });
