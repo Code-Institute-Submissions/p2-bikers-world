@@ -64,7 +64,7 @@
     <!-- Search function === Bike Incidents -->
     <div class="container-fluid mt-3">
         <div class="row">
-            <div class="col col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
+            <div class="col col-md-12 col-lg-10 offset-lg-1 col-xl-8 offset-xl-2">
                 <h4>Incidents</h4>
                 <div class="input-group">
                     <input type="text" class="form-control"
@@ -77,7 +77,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col col-lg-8 offset-lg-2 col-xl-4 mt-2 mb-2">
+            <div class="col col-lg-10 offset-lg-1 offset-xl-2 mt-2 mb-2">
                 <button type="button" class="btn btn-sm btn-primary" data-toggle="collapse"
                     data-target="#incident-advancedSearch">Advanced Options</button>
             </div>
@@ -85,7 +85,7 @@
         <div id="incident-advancedSearch" class="row collapse mb-2">
             <!-- <div id="incident-advancedSearch" class="collapse"> -->
             <!-- <div class="row mt-2 mb-4"> -->
-            <div class="col col-lg-4 offset-lg-2 col-xl-4">
+            <div class="col col-sm-6 col-md-5 col-lg-4 offset-lg-1 col-xl-3 offset-xl-2">
                 <span class="mr-3 font-weight-light">Select a type:</span>
                 <select class="custom-select custom-select-sm" style="width:10em" id="incident-type-selectBox">
                     <option selected value="">All</option>
@@ -97,7 +97,7 @@
                     <option value="chop_shop">Chop Shop</option>
                 </select>
             </div>
-            <div class="col col-lg-5 col-xl-5">
+            <div class="text-right col-10 offset-1 col-sm-5 col-md-6 col-lg-5 col-xl-3 offset-xl-2">
                 <button class="btn btn-sm bg-danger text-white" style="width:7em"><i>Crash</i></button>
                 <button class="btn btn-sm bg-warning" style="width:7em"><i>Hazard</i></button>
                 <button class="btn btn-sm bg-dark text-white" style="width:7em"><i>Theft</i></button>
@@ -109,7 +109,7 @@
         </div>
         <div id="incidents-row" class="row mb-2 overflow-auto" style="height:25em">
             <!-- Generate incidents in card format -->
-            <div id="incident-posts" class="col-12 col-md-10 col-lg-12 col-xl-8 offset-xl-2"></div>
+            <div id="incident-posts" class="col-12 col-sm-12 col-md-12 col-lg-10 offset-lg-1 col-xl-8 offset-xl-2"></div>
         </div>
 
     </div>
