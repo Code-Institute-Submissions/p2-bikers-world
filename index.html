@@ -65,7 +65,7 @@
             <div class="col col-7 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
                 <h4>Incidents</h4>
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for a incident... (e.g. bicycle incidents in Australia)" aria-label="search bike incidents" aria-describedby="basic-addon2">
+                    <input type="text" class="form-control" placeholder="Search for a incident... (e.g. bicycle incidents in Australia)" aria-label="search bike incidents" aria-describedby="basic-addon2" id="incidentSearchInput">
                     <div class="input-group-append">
                         <button id="search-bike-incidents" class="btn btn-outline-primary" type="button">Search</button>
                     </div>
@@ -75,14 +75,14 @@
         <div class="row mt-2 mb-4">
             <div class="col-7 col-lg-8 offset-lg-2 col-xl-5 offset-xl-2">
                 <span class="mr-3 font-weight-light">Select a type:</span>
-                <select class="custom-select custom-select-sm" style="width:10em">
-                      <option selected value="*">All</option>
-                      <option value="Crash">Crash</option>
-                      <option value="Hazard">Hazard</option>
-                      <option value="Theft">Theft</option>
-                      <option value="Unconfirmed">Unconfirmed</option>
-                      <option value="Infrastructure">Infrastructure</option>
-                      <option value="Chop Shop">Chop Shop</option>
+                <select class="custom-select custom-select-sm" style="width:10em" id="incident-type-selectBox">
+                      <option selected value="">All</option>
+                      <option value="crash">Crash</option>
+                      <option value="hazard">Hazard</option>
+                      <option value="theft">Theft</option>
+                      <option value="unconfirmed">Unconfirmed</option>
+                      <option value="infrastructure_issue">Infrastructure</option>
+                      <option value="chop_shop">Chop Shop</option>
                 </select>
             </div>
         </div>

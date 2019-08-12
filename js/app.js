@@ -20,7 +20,7 @@ var epCityBike = "https://api.citybik.es/v2/networks";
  * --> (1) mapLocations     === Map locations of registered bicycles
  * --> (2) mapInstance      === Current user location
  */
-var mapLocations = [];  // Store map location as objects within array for CityBike features
+var mapLocations = [];
 var mapInstance = [];
 
 /**
@@ -29,22 +29,24 @@ var mapInstance = [];
  * --> (2) bikewise_params  === Insert parameters into API upon request
  */
 var incident_cate = ["Crash", "Hazard", "Theft", "Unconfirmed", "Infrastructure", "Chop Shop"];                    
-var bikewise_params = {
-    'page': 1,
-    // 'per_page': 50,
-    // 'incident_type': '',
-    // 'proximity': '',
-    'proximity_square': 100,
-    'query': ''
-};
-var bikewise_params_2 = {
-    'page': 5,
-    'per_page': 50,
-    // 'incident_type': '',
-    // 'proximity': '',
-    'proximity_square': 1000,
-    'query': ''
-};
+var bikewise_params = {};
+// var bikewise_params = {
+//     'page': 1,
+//     // 'per_page': 50,
+//     // 'incident_type': '',
+//     // 'proximity': '',
+//     'proximity_square': 100,
+//     'query': ''
+// };
+
+// var bikewise_params_2 = {
+//     'page': 5,
+//     'per_page': 50,
+//     // 'incident_type': '',
+//     // 'proximity': '',
+//     'proximity_square': 1000,
+//     'query': ''
+// };
 
 
 
@@ -170,9 +172,8 @@ $(function() {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 };
-                
-                // 
-                mapLocations2.push(pos);
+
+                mapInstance.push(pos);
 
                 // Drop marker on current location
                 var currMarker = new google.maps.Marker({
@@ -182,8 +183,9 @@ $(function() {
                     title: 'HERE I AM!'
                 });                                
 
+                // 
                 currMarker.addListener('click', function() {
-                    map.setZoom(9);
+                    map.setZoom(10);
                     map.setCenter(currMarker.getPosition());
                 })
                 // Centralized map position
@@ -211,9 +213,43 @@ $(function() {
         
         // Empty child elements of selected id
         $("#incident-posts").empty()
+
+        /**
+         * Instatiate "params" object variable for adding key pair value later
+         * on for BikeWise API consumption. Comes with default key pair value
+         * --> "page" - Results from which page of the forum
+         * --> "proximity_square" - Distance between search and incidents location
+         */
+        var params = {
+            'page': 1,            
+            'proximity_square': 100,
+        }
+
+        /**
+         * Instantiate variables to retrieve values from ...
+         * --> 1. Incidents search box
+         * --> 2. Incidents type select box
+         */  
+        var incident_search_val = $("#incidentSearchInput").val();
+        if (incident_search_val) {
+            params["incident_search_val"] = incident_search_val;
+
+        }
+
+        var incident_type_val = $( "#incident-type-selectBox option:selected").val();        
+        if (incident_type_val) {
+            params["incident_type"] = incident_type_val;
+
+        }
         
+        // Initialize bikewise api parameters for API consumption.
+        bikewise_params = params;
+        
+        console.log(bikewise_params);
+
         // Initialize counter for incidents post. Assign each post for better recognition.
         var num = 1;
+        
         getDataFromBikeWiseAsync(bikewise_params, function(data) {
             
             for (let bikeInfo in data) {
@@ -265,8 +301,8 @@ $(function() {
                 var bsCard = "<div class='card "+ bs_textcolor + " " + bs_bgcolor + " mb-3'>" +
                             "<div class='card-header'><h4>" + num + ". " + incident_result_title + "</h4></div>" +
                             "<div class='card-body'>" +
-                                "<div class='card-title'><p><b>[Address]</b> " +
-                                    incident_result_address + "</p><p><b>[Description]</b> " +
+                                "<div class='card-title'><p><b>Incident location<br></b> " +
+                                    incident_result_address + "</p><p><b>Incident details<br></b> " +
                                     incident_result_descript +
                                 "</p></div>" +
                             "</div>" +
