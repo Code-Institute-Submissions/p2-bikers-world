@@ -18,13 +18,10 @@ They are arranged in these categories,
     <li>Infrastructure Issue</li>
     <li>Chop Shop</li>
 </ul>
+<br>
 
 ## UI/UX   
  
-Use this section to provide insight into your UX process, focusing on who this website is for, what it is that they want to achieve and how your project is the best way to help them achieve these things.
-
-In particular, as part of this section we recommend that you provide a list of User Stories, with the following general structure:
-
 User Stories:
 ---> <i>(e.g. As a user type, I want to perform an action, so that I can achieve a goal.)</i>
 1. As a commuter, I want to search for shared bicycles location, so that I know where to rent them while travel across the globe.
@@ -33,7 +30,8 @@ User Stories:
 4. As a commuter, I want to search for bicycle incidents report, so that I know the latest news around the neigborhood or country.
 5. As a commuter, I want to search for different types of bicycle incident reports, so that I can filter to the right information.
 
-This section is also where you would share links to any wireframes, mockups, diagrams etc. that you created as part of the design process. These files should themselves either be included in the project itself (in an separate directory), or just hosted elsewhere online and can be in any format that is viewable inside the browser.
+<br>
+
 
 ## Features
 
@@ -42,14 +40,31 @@ In this section, you should go over the different parts of your project, and des
  
 ### Existing Features
 
-- Feature 1 - Users can view all the available bicycle locations around the globe (when they clicked on the)
-- Feature 2 - 
+Users can ...
+- Feature #1 - View all the available bicycle locations around the globe when they clicked on "Locate Bike!" button.
+- Feature #2 - Search for current location within the map
+- Feature #3 - Search for another location within the map
+- Feature #4 - Search for incident that matches the search query
+- Feature #5 - Select different
 
-[Future]
-In addition, you may also use this section to discuss plans for additional features to be implemented in the future:
+#### Future
+1. AutoComplete place search on Google Map
+2. Locate the bicycles
+    1. within a certain radius of searched location
+    2. within a certain radius of current location
+
 
 ### Features Left to Implement
-- Another feature idea
+<i>
+    Due to time constraints and challenges... Below here are the features I wished to implement.
+</i>
+
+1. AutoComplete place search on Google Map
+2. Locate the bicycles
+    1. within a certain radius of searched location
+    2. within a certain radius of current location
+
+<br>
 
 ## Technologies Used
 
@@ -64,55 +79,73 @@ In addition, you may also use this section to discuss plans for additional featu
 - API(s)
     - [CityBike](https://api.citybik.es/v2/)
     - [BikeWise](https://bikewise.org/documentation/api_v2)
+- AWS Cloud9 (IDE)
+- Microsoft VS Code (Editor)
+
+<br>
 
 ## Testing
 
-In this section, you need to convince the assessor that you have conducted enough testing to legitimately believe that the site works well. Essentially, in this part you will want to go over all of your user stories from the UX section and ensure that they all work as intended, with the project providing an easy and straightforward way for the users to achieve their goals.
-
-Whenever it is feasible, prefer to automate your tests, and if you've done so, provide a brief explanation of your approach, link to the test file(s) and explain how to run them.
+These are the tests I have done so far...
 
 Manual Test
 1. Index (index.html)
     1. Launch the html page by previewing it on a new tab of the browser, and ensure there isn't any occurrence of errors.
 2. App (app.js)
     1. Tested the script by viewing through the inspector's console. Make sure there is not any known errors.
+    2. Tested with JSLint, apart from code format error, nothing critcal shows up.
 
+Screen Test (Different screen sizes and browser)
+1. Screen
+    1. 'div' element with 'map' id ... size changes when,
+        1. Screen size (576px and below), height = 400px
+        2. Screen size (768px and below), height = 300px
+        3. Screen size (1024px and below), height = 400px
+        4. Screen size (1024px and below), height = 600px
 
-In addition, you should mention in this section how your project looks and works on different browsers and screen sizes.
-
-You should also mention in this section any interesting bugs or problems you discovered during your testing, even if you haven't addressed them yet.
-
-If this section grows too long, you may want to split it off into a separate file and link to it from here.
+<br>
 
 ## Deployment
 
-- The website is deployed on Github pages, and developed on AWS Cloud 9 IDE platform.
+- The website is currently deployed on Github pages, and developed on AWS Cloud 9 IDE platform. Occasionally, I would perform some lightweight code edits to the code using Microsoft Visual Studio Code.
 
-#### Steps deployment
+### Steps deployment
 
-<ol>
-    <li>Step 1</li>
-    <li>Step 2</li>
-    <li>Step 3</li>
-</ol>
+1. Create a new repository for your project on your local computer.
+    ```
+    git init .                  // initialize repo with all files
+    git add .                   // add all files into local staging
+    git status                  // check if any files are left out before commiting
+    git commit -m "message"     // commit change with message of your files into repo
+    ```
+2. Add your remote git link for uploading your files onto Github later on.
+    ```
+    git remote add origin <your-remote-git-link>    // add your remote repo link
+    ```
+3. Push your files onto your remote
+    ```
+    git push -u origin master   // upload your files into your remote repo
+    ```
 
-This section should describe the process you went through to deploy the project to a hosting platform (e.g. GitHub Pages or Heroku).
+4. Should you have the interest to work the files offline, you can do so by cloning a copy.
+    ```
+    git clone <remote-link>     // Clone the selected repo offline
+    ```
 
-In particular, you should provide all details of the differences between the deployed version and the development version, if any, including:
-- Different values for environment variables (Heroku Config Vars)?
-- Different configuration files?
-- Separate git branch?
-
-In addition, if it is not obvious, you should also describe how to run your code locally.
+NOTE: All commits are pushed to master branch, as currently there is no intention of creating new branches.
+<br><br>
 
 
 ## Credits
 
 ### Content
-- Nil
+- All contents on the website were written by me.
 
 ### Media
-- The photos used in this site were obtained from ...
+- Mountain bike icon for the navbar, taken from [flaticon](https://www.flaticon.com/free-icon/mountain-bike_1947458)
 
 ### Acknowledgements
 - [Stack Overflow](https://stackoverflow.com/)
+- [W3Schools](https://www.w3schools.com/)
+
+<b>This is for educational use.</b>

@@ -90,7 +90,7 @@ function initMap() {
 
     // Set the data fields to return when the user selects a place.
     autocomplete.setFields(['address_components', 'geometry', 'icon', 'name']);
-    var marker = new google.maps.Marker({
+    marker = new google.maps.Marker({
         map: map
         // anchorPoint: new google.maps.Point(0, -29)
     });
@@ -238,7 +238,8 @@ $(function () {
                     map.setCenter(currMarker.getPosition());
                 })
                 // Centralized map position
-                map.setCenter(pos);                
+                map.setCenter(pos);
+                map.setZoom(12);                
 
             }, function () {
                 handleLocationError(true, infoWindow, map.getCenter());
