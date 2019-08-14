@@ -24,10 +24,8 @@ var epCityBike = "https://api.citybik.es/v2/networks";
  * CityBike API variables
  * Store map locations as objects within array(s)
  * --> (1) mapLocations     === Map locations of registered bicycles
- * --> (2) mapInstance      === Current user location
  */
 var mapLocations = [];
-var mapInstance = [];
 
 /**
  * BikeWise API variables
@@ -66,14 +64,27 @@ function getDataFromBikeWiseAsync(params, callback) {
         });
 }
 
+function checkAndClearMarkers() {    
+        
+    if (!gMarkers || gMarkers.length != 0) {
+        setMapOnAll(null);
+        gMarkers = [];
+        console.log("EXECUTION DONE!");
+    }    
+}
+
 function setMapOnAll(map) {
     for (var i = 0; i < gMarkers.length; i++) {
         gMarkers[i].setMap(map);
     }
+    console.log("STEP 1 --- CLEARED MARKERS!");
 }
 
 // Initialize API call results on Google Map
 function initMap() {
+
+    // Check markers
+    checkAndClearMarkers();
 
     // Render Singapore coordinates on Google Map
     map = new google.maps.Map(document.getElementById('map'), {
@@ -84,10 +95,6 @@ function initMap() {
     var uInput = document.getElementById("pac-input");
     var autocomplete = new google.maps.places.Autocomplete(uInput);
 
-    // CLear all markers
-    setMapOnAll(null);
-    console.log("Step1");
-
     // Set the data fields to return when the user selects a place.
     autocomplete.setFields(['address_components', 'geometry', 'icon', 'name']);
     marker = new google.maps.Marker({
@@ -95,6 +102,7 @@ function initMap() {
         // anchorPoint: new google.maps.Point(0, -29)
     });
     gMarkers.push(marker);
+    console.log("Marker being pushed.");
 
     autocomplete.addListener('place_changed', function () {
         // infowindow.close();
@@ -132,6 +140,7 @@ function initMap() {
         // infowindow.open(map, marker);
 
     });
+
 }
 
 // Execute code when script is loaded
@@ -146,28 +155,25 @@ $(function () {
     // FUNCTION : Retrieve ALL bike locations that is registered worldwide
     $("#get-bike-button").click(function () {
 
-        setMapOnAll(null);
-        console.log("Step2: " + gMarkers);
-
+        checkAndClearMarkers();
+                
+        /** 
+         * Clear array to prevent overlapping of bike locations that will be
+         * used later in getDataFromCityBikeAsync() callback
+        */ 
+        mapLocations = [];  
         getDataFromCityBikeAsync(function(data) {
 
-            // Clear array
-            mapLocations = [];
-
             for (let bike of data) {
-                /** 
-                    Assign bike locations in latitude and longitute and allocate
-                    them in "bikePostiion" object variable.
+                /**
+                 *  Assign bike locations in latitude and longitute and allocate  
+                 * them in "bikePostiion" object variable.                                
                 */
                 let bikePosition = {
                     lat: bike.location.latitude,
                     lng: bike.location.longitude
                 };
-                /**
-                    Add bike locations in object, into "mapLocations" array variable
-                    for later use in marker clustering.
-                */
-                mapLocations.push(bikePosition);
+                mapLocations.push(bikePosition);                
             }
 
             /**
@@ -178,29 +184,24 @@ $(function () {
              * --> map animation
              * and, return the markers for display on map later
              */
-
             for (var x = 0; x < mapLocations.length; x++) {
                 marker = new google.maps.Marker({
                     map: map,
                     position: (mapLocations[x]),
                     animation: google.maps.Animation.DROP
-                });
-                gMarkers.push(marker);
-            }
+                });                
+                gMarkers.push(marker);                
+                console.log(marker);                
+            }                                   
 
-            // marker = mapLocations.map(function(location) {                
-            //     return new google.maps.Marker({
-            //         map: map,
-            //         position: location,
-            //         animation: google.maps.Animation.DROP
-            //     });
-            // });
-
-            console.log("How does marker look like? " + marker);
             // Add marker clusterer to manage the markers.
-            new MarkerClusterer(map, gMarkers, {
+            var markerClus = new MarkerClusterer(map, gMarkers, {
                 imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
             });
+
+            // Centralized map position            
+            map.setZoom(1);            
+            map.setCenter({lat:0, lng:0});    
 
         });
     })
@@ -208,10 +209,10 @@ $(function () {
     // FUNCTION : Get current user's location
     $("#get-current-location").click(function () {
 
+        checkAndClearMarkers();
+        
         // Initialize Google's infoWindow property
-        infoWindow = new google.maps.InfoWindow;
-
-        setMapOnAll(null);
+        infoWindow = new google.maps.InfoWindow;        
 
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
@@ -231,8 +232,8 @@ $(function () {
                     title: 'HERE I AM!'
                 });
                 gMarkers.push(currMarker);
-
-                // 
+                 
+                // Add click event listener to marker
                 currMarker.addListener('click', function () {
                     map.setZoom(17);
                     map.setCenter(currMarker.getPosition());
@@ -292,8 +293,6 @@ $(function () {
 
         // Initialize bikewise api parameters for API consumption.
         bikewise_params = params;
-
-        console.log(bikewise_params);
 
         // Initialize counter for incidents post. Assign each post for better recognition.
         var incidentPostNo = 1;

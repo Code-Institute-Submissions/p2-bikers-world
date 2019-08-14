@@ -97,11 +97,11 @@ Manual Test
 
 Screen Test (Different screen sizes and browser)
 1. Screen
-    1. 'div' element with 'map' id ... size changes when,
-        1. Screen size (576px and below), height = 400px
-        2. Screen size (768px and below), height = 300px
-        3. Screen size (1024px and below), height = 400px
-        4. Screen size (1024px and below), height = 600px
+    1. 'div' element with 'map' id ... size changes when screen size is equivalent,
+        1. <i>(576px and below)</i>, map height will change to 400px
+        2. <i>(768px and below)</i>, map height will change to 300px
+        3. <i>(1024px and below)</i>, map height will change to 400px
+        4. <i>(1024px and below)</i>, map height will change to 600px
 
 <br>
 
