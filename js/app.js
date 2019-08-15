@@ -11,6 +11,7 @@
 var map, infoWindow;    // Store map instance, infowindow from Google
 var marker;
 var gMarkers = [];
+var markerClusterer;
 
 /**
  * API Links
@@ -64,32 +65,38 @@ function getDataFromBikeWiseAsync(params, callback) {
         });
 }
 
-function checkAndClearMarkers() {    
-        
+function checkAndClearMarkers() {
+
+    // Check if array value or length is undefined or 0
     if (!gMarkers || gMarkers.length != 0) {
+        
         setMapOnAll(null);
         gMarkers = [];
-        console.log("EXECUTION DONE!");
-    }    
+
+        // Check if marker clusterer exist
+        if (markerClusterer != undefined) {
+            // Clear clusterer on Google Map
+            markerClusterer.clearMarkers();
+        }
+    }
 }
 
 function setMapOnAll(map) {
-    for (var i = 0; i < gMarkers.length; i++) {
-        gMarkers[i].setMap(map);
+
+    for (var i = 0; i < gMarkers.length; i++) {        
+        gMarkers[i].setMap(map);        
     }
-    console.log("STEP 1 --- CLEARED MARKERS!");
 }
 
 // Initialize API call results on Google Map
 function initMap() {
 
-    // Check markers
     checkAndClearMarkers();
 
     // Render Singapore coordinates on Google Map
     map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 1.35, lng: 103.81 },
-        zoom: 4
+        zoom: 10
     });
 
     var uInput = document.getElementById("pac-input");
@@ -102,7 +109,12 @@ function initMap() {
         // anchorPoint: new google.maps.Point(0, -29)
     });
     gMarkers.push(marker);
-    console.log("Marker being pushed.");
+
+    // Add click event listener to marker
+    marker.addListener('click', function () {
+        map.setZoom(17);
+        map.setCenter(marker.getPosition());
+    });
 
     autocomplete.addListener('place_changed', function () {
         // infowindow.close();
@@ -117,22 +129,27 @@ function initMap() {
 
         // If the place has a geometry, then present it on a map.
         if (place.geometry.viewport) {
+            
             map.fitBounds(place.geometry.viewport);
+            map.setZoom(12);
+            map.setCenter(place.geometry.location);            
+
         } else {
+            
             map.setCenter(place.geometry.location);
-            map.setZoom(17);  // Why 17? Because it looks good.
+            map.setZoom(15);                        
         }
         marker.setPosition(place.geometry.location);
         marker.setVisible(true);
 
-        var address = '';
-        if (place.address_components) {
-            address = [
-                (place.address_components[0] && place.address_components[0].short_name || ''),
-                (place.address_components[1] && place.address_components[1].short_name || ''),
-                (place.address_components[2] && place.address_components[2].short_name || '')
-            ].join(' ');
-        }
+        // var address = '';
+        // if (place.address_components) {
+        //     address = [
+        //         (place.address_components[0] && place.address_components[0].short_name || ''),
+        //         (place.address_components[1] && place.address_components[1].short_name || ''),
+        //         (place.address_components[2] && place.address_components[2].short_name || '')
+        //     ].join(' ');
+        // }
 
         // infowindowContent.children['place-icon'].src = place.icon;
         // infowindowContent.children['place-name'].textContent = place.name;
@@ -156,13 +173,13 @@ $(function () {
     $("#get-bike-button").click(function () {
 
         checkAndClearMarkers();
-                
+
         /** 
          * Clear array to prevent overlapping of bike locations that will be
          * used later in getDataFromCityBikeAsync() callback
-        */ 
-        mapLocations = [];  
-        getDataFromCityBikeAsync(function(data) {
+        */
+        mapLocations = [];
+        getDataFromCityBikeAsync(function (data) {
 
             for (let bike of data) {
                 /**
@@ -173,7 +190,7 @@ $(function () {
                     lat: bike.location.latitude,
                     lng: bike.location.longitude
                 };
-                mapLocations.push(bikePosition);                
+                mapLocations.push(bikePosition);
             }
 
             /**
@@ -185,23 +202,34 @@ $(function () {
              * and, return the markers for display on map later
              */
             for (var x = 0; x < mapLocations.length; x++) {
+                
+                // Initialize new marker object into variable          
                 marker = new google.maps.Marker({
                     map: map,
                     position: (mapLocations[x]),
                     animation: google.maps.Animation.DROP
-                });                
-                gMarkers.push(marker);                
-                console.log(marker);                
-            }                                   
+                });
+
+                // Initialize click event for per marker location
+                google.maps.event.addListener(marker, 'click', (function(marker, x) {
+                    return function() {
+                        map.setZoom(17);
+                        map.setCenter(marker.getPosition()); 
+                    }
+                })(marker, x));
+
+                // Add marker object into array for later use
+                gMarkers.push(marker);
+            }                        
 
             // Add marker clusterer to manage the markers.
-            var markerClus = new MarkerClusterer(map, gMarkers, {
+            markerClusterer = new MarkerClusterer(map, gMarkers, {
                 imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
             });
 
             // Centralized map position            
-            map.setZoom(1);            
-            map.setCenter({lat:0, lng:0});    
+            map.setZoom(1);
+            map.setCenter({ lat: 0, lng: 0 });
 
         });
     })
@@ -210,9 +238,9 @@ $(function () {
     $("#get-current-location").click(function () {
 
         checkAndClearMarkers();
-        
+
         // Initialize Google's infoWindow property
-        infoWindow = new google.maps.InfoWindow;        
+        infoWindow = new google.maps.InfoWindow;
 
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
@@ -223,7 +251,7 @@ $(function () {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 };
-                
+
                 // Drop marker on current location
                 var currMarker = new google.maps.Marker({
                     position: pos,
@@ -232,7 +260,7 @@ $(function () {
                     title: 'HERE I AM!'
                 });
                 gMarkers.push(currMarker);
-                 
+
                 // Add click event listener to marker
                 currMarker.addListener('click', function () {
                     map.setZoom(17);
@@ -240,13 +268,13 @@ $(function () {
                 })
                 // Centralized map position
                 map.setCenter(pos);
-                map.setZoom(12);                
+                map.setZoom(12);
 
             }, function () {
                 handleLocationError(true, infoWindow, map.getCenter());
             });
-        }
-        else {
+
+        } else {
             // Browser doesn't support Geolocation
             handleLocationError(false, infoWindow, map.getCenter());
         }
@@ -369,18 +397,3 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         'Error: Your browser doesn\'t support geolocation.');
     infoWindow.open(map);
 }
-
-
-/* CityBike
-1. Autocomplete users input
-2. Take users input and shift them to suggested location on G Maps
-3. Locate the bikes with a selected radius in KM
-
-*/
-
-
-/* Bikewise
-3. Users can select how many results to display     --- *BONUS*
-4. Users can flip to different pages                --- *BONUS*
-
-*/
