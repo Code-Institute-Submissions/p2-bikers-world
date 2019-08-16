@@ -313,7 +313,7 @@ $(function () {
         if (incident_search_val) {
             params["incident_search_val"] = incident_search_val;
         }
-
+        
         var incident_type_val = $("#incident-type-selectBox option:selected").val();
         if (incident_type_val) {
             params["incident_type"] = incident_type_val;

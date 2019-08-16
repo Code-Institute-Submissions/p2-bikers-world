@@ -45,22 +45,21 @@ Users can ...
 - Feature #2 - Search for current location within the map
 - Feature #3 - Search for another location within the map
 - Feature #4 - Search for incident that matches the search query
-- Feature #5 - Select different
+- Feature #5 - View different types of incident
+- Fetaure #6 - Search for a location on the map
 
 #### Future
-1. AutoComplete place search on Google Map
-2. Locate the bicycles
+1. Locate the bicycles
     1. within a certain radius of searched location
     2. within a certain radius of current location
 
 
 ### Features Left to Implement
 <i>
-    Due to time constraints and challenges... Below here are the features I wished to implement.
+    Due to time constraints and challenges... Below here are the features I wished to implement. 
 </i>
 
-1. AutoComplete place search on Google Map
-2. Locate the bicycles
+1. Locate the bicycles
     1. within a certain radius of searched location
     2. within a certain radius of current location
 
