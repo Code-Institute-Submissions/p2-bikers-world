@@ -41,12 +41,12 @@ In this section, you should go over the different parts of your project, and des
 ### Existing Features
 
 Users can ...
-- Feature #1 - View all the available bicycle locations around the globe when they clicked on "Locate Bike!" button.
-- Feature #2 - Search for current location within the map
-- Feature #3 - Search for another location within the map
-- Feature #4 - Search for incident that matches the search query
-- Feature #5 - View different types of incident
-- Fetaure #6 - Search for a location on the map
+- Feature #1 - View all the available bicycle locations around the globe when they clicked on "Locate Bikes" button.
+- Feature #2 - View current location within the map when they clicked on "Current Location" button.
+- Feature #3 - Search for another location within the map through the search field.
+- Feature #4 - Search for incident that matches the search query.
+- Feature #5 - View different types of incident when they search through the input field under "Incidents" section of the selected type on the dropdown within "Advanced Options" collapsible button.
+- Fetaure #6 - Search for a location on the map in the "Venue" section through the input field.
 
 #### Future
 1. Locate the bicycles
