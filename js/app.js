@@ -88,6 +88,12 @@ function setMapOnAll(map) {
     }
 }
 
+function clearLocationSearchBox() {
+    if ($("#incidentSearchInput").val()) {
+        $("#incidentSearchInput").val("");
+    }
+}
+
 // Initialize API call results on Google Map
 function initMap() {
 
@@ -173,6 +179,7 @@ $(function () {
     $("#get-bike-button").click(function () {
 
         checkAndClearMarkers();
+        clearLocationSearchBox();
 
         /** 
          * Clear array to prevent overlapping of bike locations that will be
@@ -238,6 +245,7 @@ $(function () {
     $("#get-current-location").click(function () {
 
         checkAndClearMarkers();
+        clearLocationSearchBox();
 
         // Initialize Google's infoWindow property
         infoWindow = new google.maps.InfoWindow;

@@ -106,7 +106,7 @@ Screen Test (Different screen sizes and browser)
 
 ## Deployment
 
-- The website is currently deployed on Github pages, and developed on AWS Cloud 9 IDE platform. Occasionally, I would perform some lightweight code edits to the code using Microsoft Visual Studio Code.
+- The website is currently deployed on Github pages, and developed on AWS Cloud 9 IDE platform. Occasionally, I would perform some lightweight code edits using Microsoft Visual Studio Code.
 
 ### Steps deployment
 
